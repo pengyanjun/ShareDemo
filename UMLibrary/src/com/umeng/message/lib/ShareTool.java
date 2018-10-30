@@ -19,9 +19,11 @@ public class ShareTool {
     }
 
     public static ShareTool getInstance(Context context){
-        synchronized (ShareTool.class){
-            if(mTool == null) {
-                mTool = new ShareTool(context);
+        if(mTool == null){
+            synchronized (ShareTool.class){
+                if(mTool == null) {
+                    mTool = new ShareTool(context);
+                }
             }
         }
         return mTool ;
