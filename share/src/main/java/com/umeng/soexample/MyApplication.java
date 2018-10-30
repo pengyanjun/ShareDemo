@@ -13,7 +13,7 @@ public class MyApplication extends Application {
          * 设置组件化的Log开关
          * 参数: boolean 默认为false，如需查看LOG设置为true
          */
-//        UMConfigure.setLogEnabled(true);
+        UMConfigure.setLogEnabled(true);
         /**
          * 设置日志加密
          * 参数：boolean 默认为false（不加密）
@@ -29,12 +29,12 @@ public class MyApplication extends Application {
          */
         UMConfigure.init(this, "59892f08310c9307b60023d0", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,
                 null);//友盟提供的AppKey
-//        UMConfigure.init(this, "5bd19009b465f5dbd900002e", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,
-//                null);//我申请的友盟AppKey
 //        UMConfigure.init(this, "	586b0c96a40fa36bec000291", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,
 //                null);//公司申请的友盟AppKey
         PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+//        PlatformConfig.setSinaWeibo("1300669930", "9af732a740e94c84790e5be800b457df", "http://sns.whalecloud.com");//公司申请
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");//友盟提供
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setAlipay("2015111700822536");
     }
 }

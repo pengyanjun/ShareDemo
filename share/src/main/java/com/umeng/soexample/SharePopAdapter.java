@@ -78,15 +78,17 @@ public class SharePopAdapter extends BaseAdapter {
 				if (SnsPlatform != null) {
 					viewHolder.share_name_tv.setText(SnsPlatform.mShowWord);
 					if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(SnsPlatform.mPlatform)){
-						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_wx_circle_logo));
+						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wxcircle));
 					} else if (SHARE_MEDIA.WEIXIN.equals(SnsPlatform.mPlatform)){
-						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_wx_logo));
+						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wechat));
 					} else if (SHARE_MEDIA.QQ.equals(SnsPlatform.mPlatform)){
-						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qq_logo));
+						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qq));
 					} else if (SHARE_MEDIA.QZONE.equals(SnsPlatform.mPlatform)){
-						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qq_logo));
+						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qzone));
 					} else if (SHARE_MEDIA.SINA.equals(SnsPlatform.mPlatform)){
-						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_sina_logo));
+						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_sina));
+					} else if (SHARE_MEDIA.ALIPAY.equals(SnsPlatform.mPlatform)){
+						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_alipay));
 					}
 				}
 			}

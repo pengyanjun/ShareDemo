@@ -86,6 +86,7 @@ public class ShareTestActivity extends Activity implements View.OnClickListener{
                 platforms.add(SHARE_MEDIA.QQ.toSnsPlatform());
                 platforms.add(SHARE_MEDIA.QZONE.toSnsPlatform());
                 platforms.add(SHARE_MEDIA.SINA.toSnsPlatform());
+                platforms.add(SHARE_MEDIA.ALIPAY.toSnsPlatform());
                 sharePopupWindow.setShareMediaList(platforms);
                 sharePopupWindow.showAtLocation(this.findViewById(R.id.share_activity_root_ll), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
