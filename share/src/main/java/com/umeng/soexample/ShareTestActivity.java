@@ -7,9 +7,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.umeng.message.lib.ShareBean;
+import com.umeng.message.lib.SharePopupWindow;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 
 import java.util.ArrayList;
@@ -67,31 +70,54 @@ public class ShareTestActivity extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-//        UMWeb web = new UMWeb("http://mobile.umeng.com/social");
-//        web.setTitle("This is music title");//标题
-//        web.setThumb(new UMImage(this, R.drawable.ic_launcher)); //缩略图
-//        web.setDescription("my description");//描述
-
         switch(view.getId()){
             case R.id.mianban_btn:
-//                new ShareAction(this).withMedia(web)
-//                        .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
-//                        .setCallback(shareListener).open();
                 if (sharePopupWindow == null){
                     sharePopupWindow = new SharePopupWindow(this, shareListener);
                 }
-                List<SnsPlatform> platforms = new ArrayList<>();
-                platforms.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
-                platforms.add(SHARE_MEDIA.WEIXIN.toSnsPlatform());
-                platforms.add(SHARE_MEDIA.QQ.toSnsPlatform());
-                platforms.add(SHARE_MEDIA.QZONE.toSnsPlatform());
-                platforms.add(SHARE_MEDIA.SINA.toSnsPlatform());
-                platforms.add(SHARE_MEDIA.ALIPAY.toSnsPlatform());
-                sharePopupWindow.setShareMediaList(platforms);
+                List<ShareBean> shareBeans = getShareData();
+
+                sharePopupWindow.setShareMediaList(shareBeans);
+
                 sharePopupWindow.showAtLocation(this.findViewById(R.id.share_activity_root_ll), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
         }
 
+    }
+
+    private List<ShareBean> getShareData(){
+        List<ShareBean> shareBeans = new ArrayList<>();
+
+        //分享的图片，UMImage的构建有如下几种形式
+        //UMImage image = new UMImage(ShareActivity.this, "imageurl");//网络图片
+        //UMImage image = new UMImage(ShareActivity.this, file);//本地文件
+        //UMImage image = new UMImage(ShareActivity.this, R.drawable.xxx);//资源文件
+        //UMImage image = new UMImage(ShareActivity.this, bitmap);//bitmap文件
+        //UMImage image = new UMImage(ShareActivity.this, byte[]);//字节流
+        UMImage umImage = new UMImage(this, R.drawable.ic_launcher);//分享的图片
+        String sharetitle ="This is title";//标题
+        String shareContent = "This is content";//分享的文本内容
+        String shareUrl = "http://mobile.umeng.com/social";//分享的链接
+
+        ShareBean shareBean = new ShareBean(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform(), shareUrl, sharetitle, shareContent, umImage);
+        shareBeans.add(shareBean);
+
+        shareBean = new ShareBean(SHARE_MEDIA.WEIXIN.toSnsPlatform(), shareUrl, sharetitle, shareContent, umImage);
+        shareBeans.add(shareBean);
+
+        shareBean = new ShareBean(SHARE_MEDIA.QQ.toSnsPlatform(), shareUrl, sharetitle, shareContent, umImage);
+        shareBeans.add(shareBean);
+
+        shareBean = new ShareBean(SHARE_MEDIA.QZONE.toSnsPlatform(), shareUrl, sharetitle, shareContent, umImage);
+        shareBeans.add(shareBean);
+
+        shareBean = new ShareBean(SHARE_MEDIA.SINA.toSnsPlatform(), shareUrl, sharetitle, shareContent, umImage);
+        shareBeans.add(shareBean);
+
+        shareBean = new ShareBean(SHARE_MEDIA.ALIPAY.toSnsPlatform(), shareUrl, sharetitle, shareContent, umImage);
+        shareBeans.add(shareBean);
+
+        return shareBeans;
     }
 
     @Override

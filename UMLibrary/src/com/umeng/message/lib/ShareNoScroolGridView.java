@@ -1,4 +1,4 @@
-package com.umeng.soexample;
+package com.umeng.message.lib;
 
 import android.content.Context;
 import android.util.AttributeSet;

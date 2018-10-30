@@ -1,4 +1,4 @@
-package com.umeng.soexample;
+package com.umeng.message.lib;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SharePopAdapter extends BaseAdapter {
-	private List<SnsPlatform> shareMediaList;
+	private List<ShareBean> shareMediaList;
 	private Context mContext;
 	private LayoutInflater mInflater;
 
-	public SharePopAdapter(List<SnsPlatform> shareMediaList, Context context) {
+	public SharePopAdapter(List<ShareBean> shareMediaList, Context context) {
 		this.mContext = context;
 		this.mInflater = LayoutInflater.from(mContext);
 		if (shareMediaList == null) {
@@ -29,7 +29,7 @@ public class SharePopAdapter extends BaseAdapter {
 		}
 	}
 
-	public void notifyDataChage(List<SnsPlatform> shareMediaList) {
+	public void notifyDataChage(List<ShareBean> shareMediaList) {
 		if (shareMediaList == null) {
 			this.shareMediaList = new ArrayList<>();
 		} else {
@@ -74,20 +74,21 @@ public class SharePopAdapter extends BaseAdapter {
 		}
 		try {
 			if (shareMediaList != null && shareMediaList.size() > 0) {
-				SnsPlatform SnsPlatform = shareMediaList.get(position);
-				if (SnsPlatform != null) {
-					viewHolder.share_name_tv.setText(SnsPlatform.mShowWord);
-					if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(SnsPlatform.mPlatform)){
+				ShareBean shareBean = shareMediaList.get(position);
+				if (shareBean != null) {
+					SnsPlatform platform = shareBean.getPlatform();
+					viewHolder.share_name_tv.setText(platform.mShowWord);
+					if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
 						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wxcircle));
-					} else if (SHARE_MEDIA.WEIXIN.equals(SnsPlatform.mPlatform)){
+					} else if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform)){
 						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wechat));
-					} else if (SHARE_MEDIA.QQ.equals(SnsPlatform.mPlatform)){
+					} else if (SHARE_MEDIA.QQ.equals(platform.mPlatform)){
 						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qq));
-					} else if (SHARE_MEDIA.QZONE.equals(SnsPlatform.mPlatform)){
+					} else if (SHARE_MEDIA.QZONE.equals(platform.mPlatform)){
 						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qzone));
-					} else if (SHARE_MEDIA.SINA.equals(SnsPlatform.mPlatform)){
+					} else if (SHARE_MEDIA.SINA.equals(platform.mPlatform)){
 						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_sina));
-					} else if (SHARE_MEDIA.ALIPAY.equals(SnsPlatform.mPlatform)){
+					} else if (SHARE_MEDIA.ALIPAY.equals(platform.mPlatform)){
 						viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_alipay));
 					}
 				}
