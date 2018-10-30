@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="share_pop_name_font_size">12sp</dimen>
+    <dimen name="share_pop_btn_font_size">18sp</dimen>
+    <dimen name="share_pop_common_divider_height">0.2dp</dimen>
+    <dimen name="share_pop_title_font_size">24sp</dimen>
+</resources>

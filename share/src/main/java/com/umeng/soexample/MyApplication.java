@@ -31,6 +31,8 @@ public class MyApplication extends Application {
                 null);//友盟提供的AppKey
 //        UMConfigure.init(this, "5bd19009b465f5dbd900002e", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,
 //                null);//我申请的友盟AppKey
+//        UMConfigure.init(this, "	586b0c96a40fa36bec000291", "Umeng", UMConfigure.DEVICE_TYPE_PHONE,
+//                null);//公司申请的友盟AppKey
         PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");

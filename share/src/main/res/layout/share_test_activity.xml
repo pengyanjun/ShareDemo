@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/share_activity_root_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,44 +9,10 @@
 
     <Button
         android:id="@+id/mianban_btn"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="分享面板"
         android:layout_marginBottom="20dp"
          />
-    <Button
-        android:id="@+id/qq_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="QQ"
-        android:layout_marginBottom="20dp"
-        />
-    <Button
-        android:id="@+id/qqzone_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="QQ空间"
-        android:layout_marginBottom="20dp"
-        />
-    <Button
-        android:id="@+id/weixin_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="微信"
-        android:layout_marginBottom="20dp"
-        />
-    <Button
-        android:id="@+id/weixin_circle_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="微信朋友圈"
-        android:layout_marginBottom="20dp"
-        />
-    <Button
-        android:id="@+id/sina_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="新浪微博"
-        android:layout_marginBottom="20dp"
-        />
 </LinearLayout>
