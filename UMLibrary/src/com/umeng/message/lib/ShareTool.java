@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -53,6 +54,8 @@ public class ShareTool {
      * @param shareListener 分享结果回调
      */
     public void share(Context context, SHARE_MEDIA platform, String url, String title, UMImage umImage, String content, UMShareListener shareListener){
+
+        Log.e("pyj","\n"+"platform = "+platform  + ","+ "\n"+" title = " + title + ","+ "\n"+" content = " + content + ","+ "\n"+" url = " + url + ","+ "\n"+" image = " + umImage.asUrlImage());
         UMWeb web = new UMWeb(url);
         web.setTitle(title);//标题
         web.setThumb(umImage); //缩略图
