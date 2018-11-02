@@ -1,4 +1,4 @@
-package com.umeng.soexample.apshare;
+package com.xy.bizport.demo.ipmessage.apshare;
 
 import com.umeng.socialize.media.ShareCallbackActivity;
 

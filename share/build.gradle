@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.umeng.soexample"
+        applicationId "com.xy.bizport.demo.ipmessage"
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
@@ -22,22 +22,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    signingConfigs {
-//        debug {
-//            storeFile file('ipmessage.jks')
-//            storePassword "123456"
-//            keyAlias "android"
-//            keyPassword "123456"
-//        }
-//    }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
+            storeFile file('ipmessage.jks')
+            storePassword "123456"
+            keyAlias "android"
+            keyPassword "123456"
         }
     }
+//    signingConfigs {
+//        debug {
+//            storeFile file('debug.keystore')
+//            storePassword "android"
+//            keyAlias "androiddebugkey"
+//            keyPassword "android"
+//        }
+//    }
 }
 
 dependencies {

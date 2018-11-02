@@ -4,13 +4,14 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ShareBean implements Serializable{
     private static final long serialVersionUID = 1L;
     /**
      * 分享平台
      */
-    private SnsPlatform platform;
+    private List<SnsPlatform> platforms;
     /**
      * 分享的链接
      */
@@ -33,20 +34,23 @@ public class ShareBean implements Serializable{
      */
     private UMImage image;
 
-    public ShareBean(SnsPlatform platform, String shareUrl, String sharetitle, String shareContent, UMImage image) {
-        this.platform = platform;
+    public ShareBean() {
+    }
+
+    public ShareBean(List<SnsPlatform> platforms, String shareUrl, String sharetitle, String shareContent, UMImage image) {
+        this.platforms = platforms;
         this.shareUrl = shareUrl;
         this.sharetitle = sharetitle;
         this.shareContent = shareContent;
         this.image = image;
     }
 
-    public SnsPlatform getPlatform() {
-        return platform;
+    public List<SnsPlatform> getPlatforms() {
+        return platforms;
     }
 
-    public void setPlatform(SnsPlatform platform) {
-        this.platform = platform;
+    public void setPlatforms(List<SnsPlatform> platforms) {
+        this.platforms = platforms;
     }
 
     public String getShareUrl() {
@@ -81,4 +85,14 @@ public class ShareBean implements Serializable{
         this.image = image;
     }
 
+    @Override
+    public String toString() {
+        return "ShareBean{" +
+                "platforms=" + platforms +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", sharetitle='" + sharetitle + '\'' +
+                ", shareContent='" + shareContent + '\'' +
+                ", image=" + image +
+                '}';
+    }
 }

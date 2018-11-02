@@ -39,7 +39,7 @@
             android:paddingRight="10dp"
             android:horizontalSpacing="15dp"
             android:listSelector="@null"
-            android:numColumns="3"
+            android:numColumns="4"
             android:scrollbars="none"
             android:verticalSpacing="15dp" >
         </com.umeng.message.lib.ShareNoScroolGridView>

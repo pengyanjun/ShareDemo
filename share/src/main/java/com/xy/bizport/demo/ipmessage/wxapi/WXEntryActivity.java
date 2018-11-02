@@ -1,4 +1,4 @@
-package com.umeng.soexample.wxapi;
+package com.xy.bizport.demo.ipmessage.wxapi;
 
 
 

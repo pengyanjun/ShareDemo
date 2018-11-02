@@ -15,30 +15,31 @@ import android.widget.RelativeLayout.LayoutParams;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.shareboard.SnsPlatform;
 
-import java.util.List;
-
 
 public class SharePopupWindow extends PopupWindow {
 
 	private View mMenuView;
 	private Context mContext;
+	/**
+	 * 分享结果回调
+	 */
 	private UMShareListener shareListener;
 	private Button cancelBtn;
 	private ShareNoScroolGridView shareGridView;
 	private SharePopAdapter sharePopAdapter;
+	private ShareBean shareBean;
 
 
 	/**
 	 * 分享面板
 	 * @param context 传Activity的Context
-	 * @param shareListener 分享结果回调
 	 */
-	public SharePopupWindow(Context context, UMShareListener shareListener) {
+	public SharePopupWindow(Context context) {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.mContext = context ;
-		this.shareListener = shareListener ;
+		this.shareListener = (UMShareListener)context ;
 
         mMenuView = inflater.inflate(R.layout.share_popwindow, null);
         initView(mMenuView);
@@ -75,10 +76,9 @@ public class SharePopupWindow extends PopupWindow {
   
     }
 
-	public void setShareMediaList(List<ShareBean> shareMediaList) {
-		if (sharePopAdapter != null){
-			sharePopAdapter.notifyDataChage(shareMediaList);
-		}
+	public void setShareBean(ShareBean shareBean) {
+		this.shareBean = shareBean;
+		sharePopAdapter.notifyDataChage(this.shareBean);
 	}
 
 	private void initView(View view){
@@ -89,16 +89,17 @@ public class SharePopupWindow extends PopupWindow {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				try{
-					ShareBean shareBean = (ShareBean)sharePopAdapter.getItem(position);
-					if (shareBean == null || shareBean.getPlatform() == null){
+					ShareBean shareBean = sharePopAdapter.getShareBean();
+					if (shareBean == null || shareBean.getPlatforms() == null || shareBean.getPlatforms().size() == 0){
 						return;
 					}
-					SnsPlatform platform = shareBean.getPlatform();
+					SnsPlatform platform = (SnsPlatform)sharePopAdapter.getItem(position);
+
 					if (platform.mPlatform == null){
 						return;
 					}
 					dismiss();
-					ShareTool.getInstance(mContext).share(platform.mPlatform,shareBean.getShareUrl(),
+					ShareTool.getInstance().share(mContext, platform.mPlatform,shareBean.getShareUrl(),
 							shareBean.getSharetitle(), shareBean.getImage(),shareBean.getShareContent(), shareListener);
 				}catch (Exception e){
 					e.printStackTrace();
