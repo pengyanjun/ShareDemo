@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:background="@drawable/share_pop_item_press"
+    android:background="@null"
     android:orientation="vertical" >
 
     <ImageView
@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/share_pop_item_press"
+        android:padding="8dp"
         android:scaleType="centerInside"
         android:gravity="center" />
     <TextView
@@ -19,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/share_pop_name_color"
         android:textSize="@dimen/share_pop_name_font_size"
         />

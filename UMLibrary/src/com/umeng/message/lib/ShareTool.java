@@ -64,6 +64,7 @@ public class ShareTool {
                 .withMedia(web)
                 .setPlatform(platform)
                 .setCallback(shareListener).share();
+        Log.e("pyj","111111111111111111111");
     }
 
     /**
@@ -75,6 +76,19 @@ public class ShareTool {
     public static Drawable getDrawable(Context context, int ResourceId) {
         try {
             return context.getResources().getDrawable(ResourceId);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    /**
+     * 读取资源字符串
+     *
+     * @param ResourceId
+     * @return 资源字符串
+     */
+    public static String getString(Context context, int ResourceId) {
+        try {
+            return context.getResources().getString(ResourceId);
         } catch (Exception e) {
             return null;
         }
@@ -151,8 +165,8 @@ public class ShareTool {
 
     private List<SnsPlatform> getSharePlatformList() {
         List<SnsPlatform> sharePlatformList = new ArrayList<>();
-        sharePlatformList.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
         sharePlatformList.add(SHARE_MEDIA.WEIXIN.toSnsPlatform());
+        sharePlatformList.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
         sharePlatformList.add(SHARE_MEDIA.QQ.toSnsPlatform());
         sharePlatformList.add(SHARE_MEDIA.QZONE.toSnsPlatform());
         sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());

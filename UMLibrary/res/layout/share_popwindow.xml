@@ -10,14 +10,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/share_pop_white"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/share_pop_bg"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/share_pop_title_height"
             android:text="@string/share_pop_title"
-            android:textColor="@color/share_pop_name_color"
+            android:textColor="@color/share_pop_title_color"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/share_pop_title_font_size"
             android:paddingTop="10dp"
@@ -35,35 +38,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:horizontalSpacing="15dp"
-            android:listSelector="@null"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:horizontalSpacing="16dp"
+            android:listSelector="@android:color/transparent"
             android:numColumns="4"
             android:scrollbars="none"
-            android:verticalSpacing="15dp" >
+            android:verticalSpacing="16dp" >
         </com.umeng.message.lib.ShareNoScroolGridView>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
             android:gravity="center_horizontal"
             android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/share_pop_common_divider_height"
-                android:background="@color/share_pop_common_divider" />
 
             <Button
                 android:id="@+id/cancel_btn"
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@drawable/share_pop_cancel_btn"
                 android:onClick="OnClickBar"
                 android:text="@string/share_pop_cancel"
-                android:textColor="@color/share_pop_name_color"
+                android:textColor="@color/share_pop_btn_text_color"
                 android:textSize="@dimen/share_pop_btn_font_size" />
         </LinearLayout>
     </LinearLayout>

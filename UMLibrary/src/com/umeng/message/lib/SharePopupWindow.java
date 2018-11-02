@@ -42,7 +42,7 @@ public class SharePopupWindow extends PopupWindow {
 		this.shareListener = (UMShareListener)context ;
 
         mMenuView = inflater.inflate(R.layout.share_popwindow, null);
-        initView(mMenuView);
+        initView();
        
         //设置SelectPicPopupWindow的View  
         this.setContentView(mMenuView);  
@@ -81,7 +81,7 @@ public class SharePopupWindow extends PopupWindow {
 		sharePopAdapter.notifyDataChage(this.shareBean);
 	}
 
-	private void initView(View view){
+	private void initView(){
 		shareGridView = (ShareNoScroolGridView)mMenuView.findViewById(R.id.share_gv);
 		sharePopAdapter = new SharePopAdapter(null, mContext);
 		shareGridView.setAdapter(sharePopAdapter);

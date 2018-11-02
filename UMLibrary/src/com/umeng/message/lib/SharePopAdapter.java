@@ -79,18 +79,24 @@ public class SharePopAdapter extends BaseAdapter {
 		try {
 			if (shareBean != null && shareBean.getPlatforms() != null && shareBean.getPlatforms().size() >0) {
 				SnsPlatform platform = shareBean.getPlatforms().get(position);
-				viewHolder.share_name_tv.setText(platform.mShowWord);
+
 				if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
+					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin_circle));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wxcircle));
 				} else if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform)){
+					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wechat));
 				} else if (SHARE_MEDIA.QQ.equals(platform.mPlatform)){
+					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qq));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qq));
 				} else if (SHARE_MEDIA.QZONE.equals(platform.mPlatform)){
+					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qzone));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qzone));
 				} else if (SHARE_MEDIA.SINA.equals(platform.mPlatform)){
+					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_sina));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_sina));
 				} else if (SHARE_MEDIA.ALIPAY.equals(platform.mPlatform)){
+					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_alipay));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_alipay));
 				}
 			}
