@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/share_pop_item_press"
         android:padding="8dp"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:gravity="center" />
     <TextView
         android:id="@+id/share_name_tv"
@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:layout_marginTop="8dp"
         android:textColor="@color/share_pop_name_color"
         android:textSize="@dimen/share_pop_name_font_size"
         />

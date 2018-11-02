@@ -37,14 +37,14 @@
             android:id="@+id/share_gv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:horizontalSpacing="16dp"
+            android:horizontalSpacing="8dp"
             android:listSelector="@android:color/transparent"
             android:numColumns="4"
             android:scrollbars="none"
-            android:verticalSpacing="16dp" >
+            android:verticalSpacing="18dp" >
         </com.umeng.message.lib.ShareNoScroolGridView>
 
         <LinearLayout
@@ -53,7 +53,7 @@
             android:gravity="center_horizontal"
             android:orientation="vertical" >
 
-            <Button
+            <TextView
                 android:id="@+id/cancel_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/share_pop_cancel_btn"
-                android:onClick="OnClickBar"
+                android:gravity="center"
                 android:text="@string/share_pop_cancel"
                 android:textColor="@color/share_pop_btn_text_color"
                 android:textSize="@dimen/share_pop_btn_font_size" />

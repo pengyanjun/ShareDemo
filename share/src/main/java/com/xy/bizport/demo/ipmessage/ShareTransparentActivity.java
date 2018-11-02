@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.umeng.message.lib.ShareBean;
 import com.umeng.message.lib.ShareNoScroolGridView;
@@ -20,7 +21,7 @@ import com.umeng.socialize.shareboard.SnsPlatform;
 import org.json.JSONObject;
 
 public class ShareTransparentActivity extends Activity implements UMShareListener{
-    private Button cancelBtn;
+    private TextView cancelBtn;
     private ShareNoScroolGridView shareGridView;
     private SharePopAdapter sharePopAdapter;
 
@@ -56,7 +57,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                 }
             }
         });
-        cancelBtn = (Button) this.findViewById(com.umeng.message.lib.R.id.cancel_btn);
+        cancelBtn = (TextView) this.findViewById(com.umeng.message.lib.R.id.cancel_btn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

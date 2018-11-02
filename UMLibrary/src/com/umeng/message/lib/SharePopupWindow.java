@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.shareboard.SnsPlatform;
@@ -24,7 +25,7 @@ public class SharePopupWindow extends PopupWindow {
 	 * 分享结果回调
 	 */
 	private UMShareListener shareListener;
-	private Button cancelBtn;
+	private TextView cancelBtn;
 	private ShareNoScroolGridView shareGridView;
 	private SharePopAdapter sharePopAdapter;
 	private ShareBean shareBean;
@@ -107,7 +108,7 @@ public class SharePopupWindow extends PopupWindow {
 			}
 		});
 
-		cancelBtn = (Button) mMenuView.findViewById(R.id.cancel_btn);
+		cancelBtn = (TextView) mMenuView.findViewById(R.id.cancel_btn);
 		cancelBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
