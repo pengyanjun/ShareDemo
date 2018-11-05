@@ -32,17 +32,21 @@ public class ShareBean implements Serializable{
      * UMImage image = new UMImage(ShareActivity.this, bitmap);//bitmap文件
      * UMImage image = new UMImage(ShareActivity.this, byte[]);//字节流
      */
-    private UMImage image;
+    private UMImage umImage;
+    /**
+     * 分享的图片下载地址
+     */
+    private String imageUrl;
 
     public ShareBean() {
     }
 
-    public ShareBean(List<SnsPlatform> platforms, String shareUrl, String sharetitle, String shareContent, UMImage image) {
+    public ShareBean(List<SnsPlatform> platforms, String shareUrl, String sharetitle, String shareContent, String imageUrl) {
         this.platforms = platforms;
         this.shareUrl = shareUrl;
         this.sharetitle = sharetitle;
         this.shareContent = shareContent;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
     public List<SnsPlatform> getPlatforms() {
@@ -77,12 +81,20 @@ public class ShareBean implements Serializable{
         this.shareContent = shareContent;
     }
 
-    public UMImage getImage() {
-        return image;
+    public UMImage getUmImage() {
+        return umImage;
     }
 
-    public void setImage(UMImage image) {
-        this.image = image;
+    public void setUmImage(UMImage umImage) {
+        this.umImage = umImage;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
@@ -92,7 +104,8 @@ public class ShareBean implements Serializable{
                 ", shareUrl='" + shareUrl + '\'' +
                 ", sharetitle='" + sharetitle + '\'' +
                 ", shareContent='" + shareContent + '\'' +
-                ", image=" + image +
+                ", umImage=" + umImage +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.umeng.message.lib.ShareBean;
@@ -51,7 +50,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                         return;
                     }
                     ShareTool.getInstance().share(ShareTransparentActivity.this, platform.mPlatform,shareBean.getShareUrl(),
-                            shareBean.getSharetitle(), shareBean.getImage(),shareBean.getShareContent(), ShareTransparentActivity.this);
+                            shareBean.getSharetitle(), shareBean.getUmImage(),shareBean.getShareContent(), ShareTransparentActivity.this);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -78,7 +77,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
             shareData.put(ShareTool.SHARE_TITLE, "title-特稿｜陆家嘴金融骗子和P2P“爆雷潮”，全是自作孽不可活！");
             shareData.put(ShareTool.SHARE_CONTENT, "content-位于上海浦东新区黄浦江畔的陆家嘴金融中心，是众多跨国银行的大中华区或东亚总部所在地，是中国最具影响力的金融中心之一。");
             shareData.put(ShareTool.SHARE_URL, "http://gz.feixin.10086.cn/I8LG36_eu2QVr");
-            shareData.put(ShareTool.SHARE_IMAGE, "http://pa.rcscdn.fetionpic.com//Public/Uploads/user/4/7/62/2/497834762/imgs/5b6015a52540d.jpg");
+            shareData.put(ShareTool.SHARE_IMAGE_URL, "http://pa.rcscdn.fetionpic.com//Public/Uploads/user/4/7/62/2/497834762/imgs/5b6015a52540d.jpg");
             sharePopAdapter.notifyDataChage(ShareTool.getInstance().getShareData(this, shareData));
         }catch (Exception e){
 
@@ -105,6 +104,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
+        ShareTool.getInstance().clearCache();
     }
 
     /**

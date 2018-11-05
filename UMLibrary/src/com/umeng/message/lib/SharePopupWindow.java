@@ -2,18 +2,22 @@ package com.umeng.message.lib;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.umeng.message.lib.net.NetStateUtils;
 import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 
 
@@ -89,22 +93,7 @@ public class SharePopupWindow extends PopupWindow {
 		shareGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				try{
-					ShareBean shareBean = sharePopAdapter.getShareBean();
-					if (shareBean == null || shareBean.getPlatforms() == null || shareBean.getPlatforms().size() == 0){
-						return;
-					}
-					SnsPlatform platform = (SnsPlatform)sharePopAdapter.getItem(position);
-
-					if (platform.mPlatform == null){
-						return;
-					}
-					dismiss();
-					ShareTool.getInstance().share(mContext, platform.mPlatform,shareBean.getShareUrl(),
-							shareBean.getSharetitle(), shareBean.getImage(),shareBean.getShareContent(), shareListener);
-				}catch (Exception e){
-					e.printStackTrace();
-				}
+				dealShareClick(position);
 			}
 		});
 
@@ -120,6 +109,43 @@ public class SharePopupWindow extends PopupWindow {
 			}
 		});
 		
+	}
+
+	private void dealShareClick(int position){
+		try{
+			//接入时，要判断网络，如果无网络则弹出提示
+			if (!NetStateUtils.isNetworkConnected(mContext)){
+				Toast.makeText(mContext,ShareTool.getString(mContext, R.string.share_network_disabled),Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (shareBean == null || shareBean.getPlatforms() == null || shareBean.getPlatforms().size() == 0){
+				Toast.makeText(mContext,"分享数据为空",Toast.LENGTH_SHORT).show();
+				return;
+			}
+			SnsPlatform platform = (SnsPlatform)sharePopAdapter.getItem(position);
+
+			if (platform.mPlatform == null){
+				Toast.makeText(mContext,"分享平台为空",Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
+				ShareTool.getInstance().getImageBitmap(mContext, shareBean.getImageUrl(), shareBean, 100, 100);
+			}
+			UMImage umImage = null;
+			if (shareBean.getUmImage() == null){
+				//设置默认分享的缩略图
+				Log.e("pyj","dealShareClick 分享缩略图为空 shareBean.getImageUrl() = " + shareBean.getImageUrl());
+				umImage = new UMImage(mContext, R.drawable.share_default_image);
+			}else{
+				umImage = shareBean.getUmImage();
+			}
+
+			dismiss();
+			ShareTool.getInstance().share(mContext, platform.mPlatform,shareBean.getShareUrl(),
+					shareBean.getSharetitle(), umImage,shareBean.getShareContent(), shareListener);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

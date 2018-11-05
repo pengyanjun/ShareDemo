@@ -88,5 +88,6 @@ public class SharePopWindowActivity extends Activity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
+        ShareTool.getInstance().clearCache();
     }
 }
