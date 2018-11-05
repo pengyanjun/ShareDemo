@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -25,6 +27,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShareTool {
+    public static String UMENG_APP_KEY = "";
+    public static String UMENG_CHANNEL = "";
+
+    public static String WEIXIN_APP_ID = "";
+    public static String WEIXIN_APP_SECRET = "";
+
+    public static String SINA_APP_KEY = "";
+    public static String SINA_APP_SECRET = "";
+    public static String SINA_CALLBACK = "";
+
+    public static String QQ_APP_ID = "";
+    public static String QQ_APP_KEY = "";
+
+    public static String ALIPAY_APP_ID = "";
+
     public static final String SHARE_TITLE = "title";
     public static final String SHARE_CONTENT = "content";
     public static final String SHARE_IMAGE_URL = "image_url";
@@ -45,6 +62,74 @@ public class ShareTool {
             }
         }
         return mTool ;
+    }
+
+    /**
+     *
+     * @param context 上下文，该参数必须传入。
+     * @param UMENG_APP_KEY 【友盟+】 AppKey，该参数必须传入。
+     * @param UMENG_CHANNEL 【友盟+】 Channel，该参数必须传入。
+     * @param WEIXIN_APP_ID 微信APP ID
+     * @param WEIXIN_APP_SECRET 微信APP SECRET
+     * @param SINA_APP_KEY 新浪微博APP KEY
+     * @param SINA_APP_SECRET 新浪微博APP SECRET
+     * @param SINA_CALLBACK 新浪微博后台的授权回调地址
+     * @param QQ_APP_ID QQ APP ID
+     * @param QQ_APP_KEY QQ APP KEY
+     * @param ALIPAY_APP_ID 支付宝APP ID
+     */
+    public void initUmengShare(Context context, String UMENG_APP_KEY, String UMENG_CHANNEL, String WEIXIN_APP_ID, String WEIXIN_APP_SECRET,
+                               String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
+                               String QQ_APP_ID, String QQ_APP_KEY, String ALIPAY_APP_ID){
+        /**
+         * 设置组件化的Log开关
+         * 参数: boolean 默认为false，如需查看LOG设置为true
+         */
+        UMConfigure.setLogEnabled(true);
+        /**
+         * 设置日志加密
+         * 参数：boolean 默认为false（不加密）
+         */
+//        UMConfigure.setEncryptEnabled(true);
+
+        if (!TextUtils.isEmpty(UMENG_APP_KEY) && !TextUtils.isEmpty(UMENG_CHANNEL)){
+            ShareTool.UMENG_APP_KEY = UMENG_APP_KEY;
+            ShareTool.UMENG_CHANNEL = UMENG_CHANNEL;
+            /**
+             * 初始化common库
+             * 参数1:上下文，不能为空
+             * 参数2:【友盟+】 AppKey，非必须参数，如果Manifest文件中已配置AppKey，该参数可以传空，则使用Manifest中配置的AppKey，否则该参数必须传入。
+             * 参数3:【友盟+】 Channel，非必须参数，如果Manifest文件中已配置Channel，该参数可以传空，则使用Manifest中配置的Channel，否则该参数必须传入，Channel命名请详见Channel渠道命名规范。
+             * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+             * 参数5:Push推送业务的secret，需要集成Push功能时必须传入Push的secret，否则传空。
+             */
+            UMConfigure.init(context, UMENG_APP_KEY, UMENG_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE,
+                    null);
+        }
+
+        if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
+            ShareTool.WEIXIN_APP_ID = WEIXIN_APP_ID;
+            ShareTool.WEIXIN_APP_SECRET = WEIXIN_APP_SECRET;
+            PlatformConfig.setWeixin(WEIXIN_APP_ID, WEIXIN_APP_SECRET);
+        }
+        if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
+            ShareTool.SINA_APP_KEY = SINA_APP_KEY;
+            ShareTool.SINA_APP_SECRET = SINA_APP_SECRET;
+            ShareTool.SINA_CALLBACK = SINA_CALLBACK;
+            PlatformConfig.setSinaWeibo(SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK);
+        }
+
+        if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
+            ShareTool.QQ_APP_ID = QQ_APP_ID;
+            ShareTool.QQ_APP_KEY = QQ_APP_KEY;
+            PlatformConfig.setQQZone(QQ_APP_ID, QQ_APP_KEY);
+        }
+
+        if (!TextUtils.isEmpty(ALIPAY_APP_ID)){
+            ShareTool.ALIPAY_APP_ID = ALIPAY_APP_ID;
+            PlatformConfig.setAlipay(ALIPAY_APP_ID);
+        }
+
     }
 
     /**
@@ -172,12 +257,24 @@ public class ShareTool {
 
     private List<SnsPlatform> getSharePlatformList() {
         List<SnsPlatform> sharePlatformList = new ArrayList<>();
-        sharePlatformList.add(SHARE_MEDIA.WEIXIN.toSnsPlatform());
-        sharePlatformList.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
-        sharePlatformList.add(SHARE_MEDIA.QQ.toSnsPlatform());
-        sharePlatformList.add(SHARE_MEDIA.QZONE.toSnsPlatform());
-        sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());
-        sharePlatformList.add(SHARE_MEDIA.ALIPAY.toSnsPlatform());
+
+        if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
+            sharePlatformList.add(SHARE_MEDIA.WEIXIN.toSnsPlatform());
+            sharePlatformList.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
+        }
+        if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
+            sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());
+        }
+
+        if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
+            sharePlatformList.add(SHARE_MEDIA.QQ.toSnsPlatform());
+            sharePlatformList.add(SHARE_MEDIA.QZONE.toSnsPlatform());
+        }
+
+        if (!TextUtils.isEmpty(ALIPAY_APP_ID)){
+            sharePlatformList.add(SHARE_MEDIA.ALIPAY.toSnsPlatform());
+        }
+
         return sharePlatformList;
     }
 
