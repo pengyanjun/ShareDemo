@@ -11,9 +11,6 @@ import android.widget.TextView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.shareboard.SnsPlatform;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SharePopAdapter extends BaseAdapter {
 	private ShareBean shareBean;
 	private Context mContext;
@@ -82,22 +79,22 @@ public class SharePopAdapter extends BaseAdapter {
 
 				if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin_circle));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wxcircle));
+					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_wxcircle));
 				} else if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_wechat));
+					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_weixin));
 				} else if (SHARE_MEDIA.QQ.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qq));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qq));
+					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qq));
 				} else if (SHARE_MEDIA.QZONE.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qzone));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_qzone));
+					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qzone));
 				} else if (SHARE_MEDIA.SINA.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_sina));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_sina));
+					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_sina));
 				} else if (SHARE_MEDIA.ALIPAY.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_alipay));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.umeng_socialize_alipay));
+					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_alipay));
 				}
 			}
 		} catch (Exception e) {
