@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="share_pop_title_color">#000000</color>
+    <color name="share_pop_white">#ffffffff</color>
+    <color name="share_pop_item_bg_press">#e5f3ff</color>
+    <color name="share_pop_common_divider">#e8e8e8</color>
+    <color name="share_pop_name_color">#e6000000</color>
+    <color name="share_pop_btn_text_color">#007dff</color>
+</resources>

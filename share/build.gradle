@@ -44,5 +44,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':UMLibrary')
+    compile project(':shareLib')
 }
