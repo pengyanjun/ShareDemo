@@ -182,7 +182,7 @@ public class ShareTool {
 
     /**
      * 显示分享面板
-     * @param context
+     * @param context  上下文，要传Activity
      * @param title 分享的标题
      * @param content 分享的文本内容
      * @param url 分享的链接
