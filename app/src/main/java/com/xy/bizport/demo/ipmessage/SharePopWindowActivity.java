@@ -11,8 +11,6 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import org.json.JSONObject;
-
 public class SharePopWindowActivity extends Activity implements View.OnClickListener, UMShareListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
