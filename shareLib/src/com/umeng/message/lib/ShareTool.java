@@ -15,6 +15,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -81,53 +82,49 @@ public class ShareTool {
     public void initUmengShare(Context context, String UMENG_APP_KEY, String UMENG_CHANNEL, String WEIXIN_APP_ID, String WEIXIN_APP_SECRET,
                                String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
                                String QQ_APP_ID, String QQ_APP_KEY, String ALIPAY_APP_ID){
-        /**
-         * 设置组件化的Log开关
-         * 参数: boolean 默认为false，如需查看LOG设置为true
-         */
-        UMConfigure.setLogEnabled(true);
-        /**
-         * 设置日志加密
-         * 参数：boolean 默认为false（不加密）
-         */
-//        UMConfigure.setEncryptEnabled(true);
+        try{
+            UMConfigure.setLogEnabled(true);//设置组件化的Log开关 参数: boolean 默认为false，如需查看LOG设置为true
+//        UMConfigure.setEncryptEnabled(true);//设置日志加密， 参数：boolean 默认为false（不加密）
 
-        if (!TextUtils.isEmpty(UMENG_APP_KEY) && !TextUtils.isEmpty(UMENG_CHANNEL)){
-            ShareTool.UMENG_APP_KEY = UMENG_APP_KEY;
-            ShareTool.UMENG_CHANNEL = UMENG_CHANNEL;
-            /**
-             * 初始化common库
-             * 参数1:上下文，不能为空
-             * 参数2:【友盟+】 AppKey，非必须参数，如果Manifest文件中已配置AppKey，该参数可以传空，则使用Manifest中配置的AppKey，否则该参数必须传入。
-             * 参数3:【友盟+】 Channel，非必须参数，如果Manifest文件中已配置Channel，该参数可以传空，则使用Manifest中配置的Channel，否则该参数必须传入，Channel命名请详见Channel渠道命名规范。
-             * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
-             * 参数5:Push推送业务的secret，需要集成Push功能时必须传入Push的secret，否则传空。
-             */
-            UMConfigure.init(context, UMENG_APP_KEY, UMENG_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE,
-                    null);
-        }
+            if (!TextUtils.isEmpty(UMENG_APP_KEY) && !TextUtils.isEmpty(UMENG_CHANNEL)){
+                ShareTool.UMENG_APP_KEY = UMENG_APP_KEY;
+                ShareTool.UMENG_CHANNEL = UMENG_CHANNEL;
+                /**
+                 * 初始化common库
+                 * 参数1:上下文，不能为空
+                 * 参数2:【友盟+】 AppKey，非必须参数，如果Manifest文件中已配置AppKey，该参数可以传空，则使用Manifest中配置的AppKey，否则该参数必须传入。
+                 * 参数3:【友盟+】 Channel，非必须参数，如果Manifest文件中已配置Channel，该参数可以传空，则使用Manifest中配置的Channel，否则该参数必须传入，Channel命名请详见Channel渠道命名规范。
+                 * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+                 * 参数5:Push推送业务的secret，需要集成Push功能时必须传入Push的secret，否则传空。
+                 */
+                UMConfigure.init(context, UMENG_APP_KEY, UMENG_CHANNEL, UMConfigure.DEVICE_TYPE_PHONE,
+                        null);
+            }
 
-        if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
-            ShareTool.WEIXIN_APP_ID = WEIXIN_APP_ID;
-            ShareTool.WEIXIN_APP_SECRET = WEIXIN_APP_SECRET;
-            PlatformConfig.setWeixin(WEIXIN_APP_ID, WEIXIN_APP_SECRET);
-        }
-        if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
-            ShareTool.SINA_APP_KEY = SINA_APP_KEY;
-            ShareTool.SINA_APP_SECRET = SINA_APP_SECRET;
-            ShareTool.SINA_CALLBACK = SINA_CALLBACK;
-            PlatformConfig.setSinaWeibo(SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK);
-        }
+            if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
+                ShareTool.WEIXIN_APP_ID = WEIXIN_APP_ID;
+                ShareTool.WEIXIN_APP_SECRET = WEIXIN_APP_SECRET;
+                PlatformConfig.setWeixin(WEIXIN_APP_ID, WEIXIN_APP_SECRET);
+            }
+            if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
+                ShareTool.SINA_APP_KEY = SINA_APP_KEY;
+                ShareTool.SINA_APP_SECRET = SINA_APP_SECRET;
+                ShareTool.SINA_CALLBACK = SINA_CALLBACK;
+                PlatformConfig.setSinaWeibo(SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK);
+            }
 
-        if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
-            ShareTool.QQ_APP_ID = QQ_APP_ID;
-            ShareTool.QQ_APP_KEY = QQ_APP_KEY;
-            PlatformConfig.setQQZone(QQ_APP_ID, QQ_APP_KEY);
-        }
+            if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
+                ShareTool.QQ_APP_ID = QQ_APP_ID;
+                ShareTool.QQ_APP_KEY = QQ_APP_KEY;
+                PlatformConfig.setQQZone(QQ_APP_ID, QQ_APP_KEY);
+            }
 
-        if (!TextUtils.isEmpty(ALIPAY_APP_ID)){
-            ShareTool.ALIPAY_APP_ID = ALIPAY_APP_ID;
-            PlatformConfig.setAlipay(ALIPAY_APP_ID);
+            if (!TextUtils.isEmpty(ALIPAY_APP_ID)){
+                ShareTool.ALIPAY_APP_ID = ALIPAY_APP_ID;
+                PlatformConfig.setAlipay(ALIPAY_APP_ID);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }
@@ -185,7 +182,7 @@ public class ShareTool {
 
     /**
      * 显示分享面板
-     * @param context
+     * @param context  上下文，要传Activity
      * @param title 分享的标题
      * @param content 分享的文本内容
      * @param url 分享的链接
@@ -247,7 +244,7 @@ public class ShareTool {
             Toast.makeText(context,"分享数据为空",Toast.LENGTH_SHORT).show();
             return null;
         }
-        ShareBean shareBean= new ShareBean(getSharePlatformList(), shareUrl, sharetitle, shareContent, imageUrl);
+        ShareBean shareBean= new ShareBean(getSharePlatformList(context), shareUrl, sharetitle, shareContent, imageUrl);
         if (!TextUtils.isEmpty(imageUrl)){
             getImageBitmap(context, imageUrl, shareBean, 100, 100);
         }
@@ -255,27 +252,36 @@ public class ShareTool {
         return shareBean;
     }
 
-    private List<SnsPlatform> getSharePlatformList() {
+    private List<SnsPlatform> getSharePlatformList(Context context) {
         List<SnsPlatform> sharePlatformList = new ArrayList<>();
 
-        if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
+        if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET) && isInstall(context, SHARE_MEDIA.WEIXIN)){
             sharePlatformList.add(SHARE_MEDIA.WEIXIN.toSnsPlatform());
             sharePlatformList.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
         }
-        if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
-            sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());
-        }
 
-        if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
+
+        if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY) && isInstall(context, SHARE_MEDIA.QQ)){
             sharePlatformList.add(SHARE_MEDIA.QQ.toSnsPlatform());
             sharePlatformList.add(SHARE_MEDIA.QZONE.toSnsPlatform());
         }
 
-        if (!TextUtils.isEmpty(ALIPAY_APP_ID)){
+        if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK) && isInstall(context, SHARE_MEDIA.SINA)){
+            sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());
+        }
+
+        if (!TextUtils.isEmpty(ALIPAY_APP_ID) && isInstall(context, SHARE_MEDIA.ALIPAY)){
             sharePlatformList.add(SHARE_MEDIA.ALIPAY.toSnsPlatform());
         }
 
         return sharePlatformList;
+    }
+
+    private boolean isInstall(Context context, SHARE_MEDIA shareMedia){
+        if (context == null || !(context instanceof Activity)){
+            return false;
+        }
+        return UMShareAPI.get(context).isInstall((Activity) context, shareMedia);
     }
 
     public void getImageBitmap(final Context context, final String image, final ShareBean shareBean, final int width, final int height) {

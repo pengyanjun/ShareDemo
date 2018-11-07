@@ -17,22 +17,16 @@ public class NetStateUtils {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        return false;
+        return activeNetInfo != null
+                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
     public static boolean isMobileNetwork(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-            return true;
-        }
-        return false;
+        return activeNetInfo != null
+                && activeNetInfo.getType() == ConnectivityManager.TYPE_MOBILE;
     }
 
     public static boolean isNetworkConnected(Context context) {

@@ -1,1 +1,1 @@
-include ':share', ':UMLibrary'
+include ':app', ':shareLib'
