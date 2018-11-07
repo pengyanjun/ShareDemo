@@ -23,11 +23,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.pop_btn:
-//                startActivity(new Intent(this,SharePopWindowActivity.class));
-                startActivityForResult(new Intent(this,SharePopWindowActivity.class), SHARE_REQUEST_CODE);
+                startActivity(new Intent(this,SharePopWindowActivity.class));
                 break;
             case R.id.share_activity_btn:
-//                startActivity(new Intent(this,ShareTransparentActivity.class));
+                //在当前页面打开分享透明activity
                 startActivityForResult(new Intent(this,ShareTransparentActivity.class), SHARE_REQUEST_CODE);
                 break;
         }

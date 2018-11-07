@@ -11,7 +11,7 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="启动分享弹框"
+        android:text="打开分享页面"
         android:layout_marginBottom="20dp"
          />
     <Button
@@ -19,7 +19,7 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="启动分享activity"
+        android:text="在当前页面打开分享透明activity"
         android:layout_marginBottom="20dp"
          />
 </LinearLayout>
