@@ -217,7 +217,10 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
      */
     @Override
     public void onResult(SHARE_MEDIA platform) {
-        Toast.makeText(this,"成功了", Toast.LENGTH_LONG).show();
+        if (!SHARE_MEDIA.WEIXIN.equals(platform)){
+            //微信分享取消分享之后的回调仍是分享成功，斌哥说微信分享干脆不弹提示了
+            Toast.makeText(this,"成功了", Toast.LENGTH_LONG).show();
+        }
 //        Intent data=new Intent();
 //        data.putExtra("result", "成功了");
 //        setResult(MainActivity.SHARE_RESULT_CODE, data);
