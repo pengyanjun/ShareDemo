@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/share_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:background="#80000000">
-    <include layout="@layout/share_popwindow"/>
+    <include
+        android:id="@+id/share_popwindow_layout"
+        layout="@layout/share_popwindow"/>
 </LinearLayout>

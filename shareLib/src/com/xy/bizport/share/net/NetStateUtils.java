@@ -1,4 +1,4 @@
-package com.umeng.message.lib.net;
+package com.xy.bizport.share.net;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

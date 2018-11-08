@@ -20,9 +20,6 @@
         <activity
             android:name=".SharePopWindowActivity"
              />
-        <activity
-            android:name=".ShareTransparentActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- share start-->
         <!-- wechat callback-->
         <activity

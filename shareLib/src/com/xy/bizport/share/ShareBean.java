@@ -1,4 +1,4 @@
-package com.umeng.message.lib;
+package com.xy.bizport.share;
 
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;

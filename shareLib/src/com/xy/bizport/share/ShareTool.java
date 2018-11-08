@@ -1,4 +1,4 @@
-package com.umeng.message.lib;
+package com.xy.bizport.share;
 
 import android.app.Activity;
 import android.content.Context;
@@ -230,7 +230,9 @@ public class ShareTool {
         String shareContent = data.optString(SHARE_CONTENT);
         String shareUrl = data.optString(SHARE_URL);
         String imageUrl = data.optString(SHARE_IMAGE_URL);
-
+        return  getShareData(context, sharetitle, shareContent, shareUrl, imageUrl);
+    }
+    public ShareBean getShareData(Context context, String sharetitle, String shareContent, String shareUrl, String imageUrl){
         if(TextUtils.isEmpty(shareContent)){
             shareContent = sharetitle;
         }

@@ -2,9 +2,7 @@ package com.xy.bizport.demo.ipmessage;
 
 import android.app.Application;
 
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.lib.ShareTool;
-import com.umeng.socialize.PlatformConfig;
+import com.xy.bizport.share.ShareTool;
 
 public class MyApplication extends Application {
     private static final String UMENG_APP_KEY = "586b0c96a40fa36bec000291";

@@ -1,4 +1,4 @@
-package com.umeng.message.lib;
+package com.xy.bizport.share;
 
 import android.content.Context;
 import android.view.LayoutInflater;
