@@ -41,7 +41,6 @@ public class ShareTool {
     public static String QQ_APP_ID = "";
     public static String QQ_APP_KEY = "";
 
-    public static String ALIPAY_APP_ID = "";
 
     public static final String SHARE_TITLE = "title";
     public static final String SHARE_CONTENT = "content";
@@ -77,11 +76,10 @@ public class ShareTool {
      * @param SINA_CALLBACK 新浪微博后台的授权回调地址
      * @param QQ_APP_ID QQ APP ID
      * @param QQ_APP_KEY QQ APP KEY
-     * @param ALIPAY_APP_ID 支付宝APP ID
      */
     public void initUmengShare(Context context, String UMENG_APP_KEY, String UMENG_CHANNEL, String WEIXIN_APP_ID, String WEIXIN_APP_SECRET,
                                String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
-                               String QQ_APP_ID, String QQ_APP_KEY, String ALIPAY_APP_ID){
+                               String QQ_APP_ID, String QQ_APP_KEY){
         try{
             UMConfigure.setLogEnabled(true);//设置组件化的Log开关 参数: boolean 默认为false，如需查看LOG设置为true
 //        UMConfigure.setEncryptEnabled(true);//设置日志加密， 参数：boolean 默认为false（不加密）
@@ -119,10 +117,6 @@ public class ShareTool {
                 PlatformConfig.setQQZone(QQ_APP_ID, QQ_APP_KEY);
             }
 
-            if (!TextUtils.isEmpty(ALIPAY_APP_ID)){
-                ShareTool.ALIPAY_APP_ID = ALIPAY_APP_ID;
-                PlatformConfig.setAlipay(ALIPAY_APP_ID);
-            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -270,10 +264,6 @@ public class ShareTool {
 
         if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK) && isInstall(context, SHARE_MEDIA.SINA)){
             sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());
-        }
-
-        if (!TextUtils.isEmpty(ALIPAY_APP_ID) && isInstall(context, SHARE_MEDIA.ALIPAY)){
-            sharePlatformList.add(SHARE_MEDIA.ALIPAY.toSnsPlatform());
         }
 
         return sharePlatformList;

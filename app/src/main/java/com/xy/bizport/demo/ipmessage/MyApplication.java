@@ -18,7 +18,6 @@ public class MyApplication extends Application {
     private static final String QQ_APP_ID = "1107943046";
     private static final String QQ_APP_KEY = "Uv77AP8JDiLfvT6J";
 
-    private static final String ALIPAY_APP_ID = "2015111700822536";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,8 +25,7 @@ public class MyApplication extends Application {
                 UMENG_APP_KEY, UMENG_CHANNEL,
                 WEIXIN_APP_ID, WEIXIN_APP_SECRET,
                 SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK,
-                QQ_APP_ID, QQ_APP_KEY,
-                ALIPAY_APP_ID);
+                QQ_APP_ID, QQ_APP_KEY);
     }
 
 }
