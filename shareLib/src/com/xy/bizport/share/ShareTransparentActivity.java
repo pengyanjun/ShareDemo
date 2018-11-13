@@ -94,8 +94,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
             }
 
             share_popwindow_layout.setVisibility(View.GONE);
-            if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform) || SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)
-                    || SHARE_MEDIA.ALIPAY.equals(platform.mPlatform)){
+            if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform) || SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
                 isNeedClose = true;
             }else {
                 isNeedClose = false;

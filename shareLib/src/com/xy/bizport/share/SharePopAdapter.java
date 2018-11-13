@@ -92,9 +92,6 @@ public class SharePopAdapter extends BaseAdapter {
 				} else if (SHARE_MEDIA.SINA.equals(platform.mPlatform)){
 					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_sina));
 					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_sina));
-				} else if (SHARE_MEDIA.ALIPAY.equals(platform.mPlatform)){
-					viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_alipay));
-					viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_alipay));
 				}
 			}
 		} catch (Exception e) {
