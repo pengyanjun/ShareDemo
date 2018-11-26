@@ -1,4 +1,4 @@
-package com.xy.bizport.demo.ipmessage;
+package com.xy.rcstest;
 
 import android.app.Application;
 

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.xy.bizport.demo.ipmessage"
+        applicationId "com.xy.rcstest"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
@@ -26,10 +26,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('ipmessage.jks')
-            storePassword "123456"
-            keyAlias "android"
-            keyPassword "123456"
+            storeFile file('key')
+            storePassword "111111"
+            keyAlias "cmccsso"
+            keyPassword "111111"
         }
     }
 }
