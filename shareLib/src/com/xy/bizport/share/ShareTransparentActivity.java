@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,12 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xy.bizport.share.net.NetStateUtils;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
+import com.xy.bizport.share.net.NetStateUtils;
 
 public class ShareTransparentActivity extends Activity implements UMShareListener{
     private TextView cancelBtn;
@@ -37,7 +36,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_transparent_activity);
-        Log.e("pyj","onCreate");
         initView();
         initData();
     }
@@ -87,7 +85,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
             UMImage umImage = null;
             if (shareBean.getUmImage() == null){
                 //设置默认分享的缩略图
-                Log.e("pyj","dealShareClick 分享缩略图为空 shareBean.getImageUrl() = " + shareBean.getImageUrl());
                 umImage = new UMImage(this, R.drawable.share_default_image);
             }else{
                 umImage = shareBean.getUmImage();
@@ -127,7 +124,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        Log.e("pyj","onActivityResult");
     }
 
     @Override
@@ -154,38 +150,32 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     protected void onDestroy() {
         super.onDestroy();
         UMShareAPI.get(this).release();
-        Log.e("pyj","onDestroy");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("pyj","onResume isNeedClose = "+ isNeedClose);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("pyj","onPause isNeedClose = "+ isNeedClose);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("pyj","onStop isNeedClose = "+ isNeedClose);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e("pyj","onStart  isNeedClose = "+ isNeedClose);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.e("pyj","onRestart isNeedClose = "+ isNeedClose);
         if (isNeedClose){
             close();
         }

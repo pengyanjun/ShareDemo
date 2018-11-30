@@ -2,6 +2,7 @@ package com.xy.bizport.share;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,6 +29,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShareTool {
+    public static final String CONSTANT_UMENG_APP_KEY = "CONSTANT_UMENG_APP_KEY";
+    public static final String CONSTANT_UMENG_CHANNEL = "CONSTANT_UMENG_CHANNEL";
+
+    public static final String CONSTANT_WEIXIN_APP_ID = "CONSTANT_WEIXIN_APP_ID";
+    public static final String CONSTANT_WEIXIN_APP_SECRET = "CONSTANT_WEIXIN_APP_SECRET";
+
+    public static final String CONSTANT_SINA_APP_KEY = "CONSTANT_SINA_APP_KEY";
+    public static final String CONSTANT_SINA_APP_SECRET = "CONSTANT_SINA_APP_SECRET";
+    public static final String CONSTANT_SINA_CALLBACK = "CONSTANT_SINA_CALLBACK";
+
+    public static final String CONSTANT_QQ_APP_ID = "CONSTANT_QQ_APP_ID";
+    public static final String CONSTANT_QQ_APP_KEY = "CONSTANT_QQ_APP_KEY";
+
+
     public static String UMENG_APP_KEY = "";
     public static String UMENG_CHANNEL = "";
 
@@ -40,8 +55,6 @@ public class ShareTool {
 
     public static String QQ_APP_ID = "";
     public static String QQ_APP_KEY = "";
-
-
     public static final String SHARE_TITLE = "title";
     public static final String SHARE_CONTENT = "content";
     public static final String SHARE_IMAGE_URL = "image_url";
@@ -81,12 +94,11 @@ public class ShareTool {
                                String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
                                String QQ_APP_ID, String QQ_APP_KEY){
         try{
-            UMConfigure.setLogEnabled(true);//设置组件化的Log开关 参数: boolean 默认为false，如需查看LOG设置为true
-//        UMConfigure.setEncryptEnabled(true);//设置日志加密， 参数：boolean 默认为false（不加密）
-
+            saveSharedPreferencesValue(context, CONSTANT_UMENG_APP_KEY, UMENG_APP_KEY);
+            saveSharedPreferencesValue(context, CONSTANT_UMENG_CHANNEL, UMENG_CHANNEL);
+            ShareTool.UMENG_APP_KEY = UMENG_APP_KEY;
+            ShareTool.UMENG_CHANNEL = UMENG_CHANNEL;
             if (!TextUtils.isEmpty(UMENG_APP_KEY) && !TextUtils.isEmpty(UMENG_CHANNEL)){
-                ShareTool.UMENG_APP_KEY = UMENG_APP_KEY;
-                ShareTool.UMENG_CHANNEL = UMENG_CHANNEL;
                 /**
                  * 初始化common库
                  * 参数1:上下文，不能为空
@@ -99,24 +111,59 @@ public class ShareTool {
                         null);
             }
 
+            saveSharedPreferencesValue(context, CONSTANT_WEIXIN_APP_ID, WEIXIN_APP_ID);
+            saveSharedPreferencesValue(context, CONSTANT_WEIXIN_APP_SECRET, WEIXIN_APP_SECRET);
+            ShareTool.WEIXIN_APP_ID = WEIXIN_APP_ID;
+            ShareTool.WEIXIN_APP_SECRET = WEIXIN_APP_SECRET;
             if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
-                ShareTool.WEIXIN_APP_ID = WEIXIN_APP_ID;
-                ShareTool.WEIXIN_APP_SECRET = WEIXIN_APP_SECRET;
                 PlatformConfig.setWeixin(WEIXIN_APP_ID, WEIXIN_APP_SECRET);
             }
+
+            saveSharedPreferencesValue(context, CONSTANT_SINA_APP_KEY, SINA_APP_KEY);
+            saveSharedPreferencesValue(context, CONSTANT_SINA_APP_SECRET, SINA_APP_SECRET);
+            saveSharedPreferencesValue(context, CONSTANT_SINA_CALLBACK, SINA_CALLBACK);
+            ShareTool.SINA_APP_KEY = SINA_APP_KEY;
+            ShareTool.SINA_APP_SECRET = SINA_APP_SECRET;
+            ShareTool.SINA_CALLBACK = SINA_CALLBACK;
             if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
-                ShareTool.SINA_APP_KEY = SINA_APP_KEY;
-                ShareTool.SINA_APP_SECRET = SINA_APP_SECRET;
-                ShareTool.SINA_CALLBACK = SINA_CALLBACK;
                 PlatformConfig.setSinaWeibo(SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK);
             }
 
+            saveSharedPreferencesValue(context, CONSTANT_QQ_APP_ID, QQ_APP_ID);
+            saveSharedPreferencesValue(context, CONSTANT_QQ_APP_KEY, QQ_APP_KEY);
+            ShareTool.QQ_APP_ID = QQ_APP_ID;
+            ShareTool.QQ_APP_KEY = QQ_APP_KEY;
             if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
-                ShareTool.QQ_APP_ID = QQ_APP_ID;
-                ShareTool.QQ_APP_KEY = QQ_APP_KEY;
                 PlatformConfig.setQQZone(QQ_APP_ID, QQ_APP_KEY);
             }
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    /**
+     *
+     * @param context 上下文，该参数必须传入。
+     * @param enableLog 设置分享的Log开关 参数: boolean 默认为false，如需查看LOG设置为true
+     * @param enableEncrypt 设置日志加密， 参数：boolean 默认为false（不加密）
+     * @param UMENG_APP_KEY 【友盟+】 AppKey，该参数必须传入。
+     * @param UMENG_CHANNEL 【友盟+】 Channel，该参数必须传入。
+     * @param WEIXIN_APP_ID 微信APP ID
+     * @param WEIXIN_APP_SECRET 微信APP SECRET
+     * @param SINA_APP_KEY 新浪微博APP KEY
+     * @param SINA_APP_SECRET 新浪微博APP SECRET
+     * @param SINA_CALLBACK 新浪微博后台的授权回调地址
+     * @param QQ_APP_ID QQ APP ID
+     * @param QQ_APP_KEY QQ APP KEY
+     */
+    public void initUmengShare(Context context, boolean enableLog, boolean enableEncrypt, String UMENG_APP_KEY, String UMENG_CHANNEL, String WEIXIN_APP_ID, String WEIXIN_APP_SECRET,
+                               String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
+                               String QQ_APP_ID, String QQ_APP_KEY){
+        try{
+            UMConfigure.setLogEnabled(enableLog);
+            UMConfigure.setEncryptEnabled(enableEncrypt);
+            initUmengShare(context, UMENG_APP_KEY, UMENG_CHANNEL, WEIXIN_APP_ID, WEIXIN_APP_SECRET, SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK, QQ_APP_ID, QQ_APP_KEY);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -135,7 +182,6 @@ public class ShareTool {
      */
     public void share(Context context, SHARE_MEDIA platform, String url, String title, UMImage umImage, String content, UMShareListener shareListener){
 
-        Log.e("pyj","\n"+"platform = "+platform  + ","+ "\n"+" title = " + title + ","+ "\n"+" content = " + content + ","+ "\n"+" url = " + url + ","+ "\n"+" image = " + umImage.asBitmap());
         UMWeb web = new UMWeb(url);
         web.setTitle(title);//标题
         web.setThumb(umImage); //缩略图
@@ -144,7 +190,6 @@ public class ShareTool {
                 .withMedia(web)
                 .setPlatform(platform)
                 .setCallback(shareListener).share();
-        Log.e("pyj","share 111111111111111111111");
     }
 
     /**
@@ -194,7 +239,6 @@ public class ShareTool {
 
     private void showSharePopupWindow(Context context, JSONObject jsonObject){
         if (!(context instanceof Activity) || !(context instanceof UMShareListener)) {
-            Log.e("pyj","showSharePopupWindow 当前Activity未实现UMShareListener");
             return;
         }
         Activity activity = (Activity)context;
@@ -204,9 +248,7 @@ public class ShareTool {
         }
 
         ShareBean shareBean = getShareData(context, jsonObject);
-        Log.e("pyj","showSharePopupWindow getShareData shareBean = " + shareBean);
         if (shareBean == null || shareBean.getPlatforms() == null || shareBean.getPlatforms().size() == 0){
-            Log.e("pyj","showSharePopupWindow 分享平台为空");
             return;
         }
 
@@ -233,10 +275,6 @@ public class ShareTool {
 
         if (TextUtils.isEmpty(sharetitle) || TextUtils.isEmpty(shareContent) || TextUtils.isEmpty(shareUrl)
                 || TextUtils.isEmpty(imageUrl)){
-            Log.e("pyj","getShareData sharetitle = " + sharetitle);
-            Log.e("pyj","getShareData shareContent = " + shareContent);
-            Log.e("pyj","getShareData shareUrl = " + shareUrl);
-            Log.e("pyj","getShareData imageUrl = " + imageUrl);
             Toast.makeText(context,"分享数据为空",Toast.LENGTH_SHORT).show();
             return null;
         }
@@ -251,18 +289,25 @@ public class ShareTool {
     private List<SnsPlatform> getSharePlatformList(Context context) {
         List<SnsPlatform> sharePlatformList = new ArrayList<>();
 
-        if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET) && isInstall(context, SHARE_MEDIA.WEIXIN)){
+        if (!TextUtils.isEmpty(getWeixinAppId(context))
+                && !TextUtils.isEmpty(getWeixinAppSecret(context))
+                && isInstall(context, SHARE_MEDIA.WEIXIN)){
             sharePlatformList.add(SHARE_MEDIA.WEIXIN.toSnsPlatform());
             sharePlatformList.add(SHARE_MEDIA.WEIXIN_CIRCLE.toSnsPlatform());
         }
 
 
-        if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY) && isInstall(context, SHARE_MEDIA.QQ)){
+        if (!TextUtils.isEmpty(getQqAppId(context))
+                && !TextUtils.isEmpty(getQqAppKey(context))
+                && isInstall(context, SHARE_MEDIA.QQ)){
             sharePlatformList.add(SHARE_MEDIA.QQ.toSnsPlatform());
             sharePlatformList.add(SHARE_MEDIA.QZONE.toSnsPlatform());
         }
 
-        if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK) && isInstall(context, SHARE_MEDIA.SINA)){
+        if (!TextUtils.isEmpty(getSinaAppKey(context))
+                && !TextUtils.isEmpty(getSinaAppSecret(context))
+                && !TextUtils.isEmpty(getSinaCallback(context))
+                && isInstall(context, SHARE_MEDIA.SINA)){
             sharePlatformList.add(SHARE_MEDIA.SINA.toSnsPlatform());
         }
 
@@ -285,7 +330,6 @@ public class ShareTool {
                     @Override
                     public void onResourceReady(byte[] bytes, GlideAnimation<? super byte[]> glideAnimation) {
                         // 下载成功回调函数
-                        Log.e("pyj","onResourceReady bytes = " + bytes);
                         shareBean.setUmImage(new UMImage(context, bytes));
                     }
 
@@ -295,52 +339,6 @@ public class ShareTool {
                     }
                 });
     }
-
-    //        final CountDownLatch startSignal = new CountDownLatch(1);
-
-//        SimpleTarget target = new SimpleTarget<Bitmap>(width,height) {
-//
-//            @Override
-//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                try{
-//                    Log.e("pyj","onResourceReady Thread = " + Thread.currentThread().getName());
-//                    Log.e("pyj","onResourceReady resource = " + resource);
-//                    shareBean.setImage(new UMImage(context, resource));
-//                    startSignal.countDown();
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        try{
-//            Log.e("pyj","getImageBitmap Thread = " + Thread.currentThread().getName());
-//            Glide.with(context.getApplicationContext())
-//                    .load(image).asBitmap().toBytes();
-//            startSignal.await(15, SECONDS);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        Schedulers.net().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                try{
-//                    Log.e("pyj","onResourceReady Thread = " + Thread.currentThread().getName());
-//                    Bitmap bitmap = Glide.with(context.getApplicationContext())
-//                            .load(image).asBitmap().into(width, height).get();
-//                    Log.e("pyj","onResourceReady bitmap = " + bitmap);
-//                    shareBean.setImage(new UMImage(context, bitmap));
-//                    startSignal.countDown();
-//
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        try{
-//            startSignal.await(10, SECONDS);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
 
     public void clearCache(){
         try{
@@ -353,5 +351,107 @@ public class ShareTool {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取保存的值
+     */
+    public static String getSharedPreferencesValue(Context context, String key)
+    {
+        if(TextUtils.isEmpty(key) || context == null){
+            return "";
+        }
+        String returnStr = "";
+        try{
+            SharedPreferences sharedPreferences = context.getApplicationContext().getSharedPreferences(
+                    "share_info", 0);
+            returnStr = sharedPreferences.getString(key, "");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return returnStr;
+    }
+
+    /**
+     * 保存信息
+     * @param value
+     */
+    public static void saveSharedPreferencesValue(Context context, String key,String value)
+    {
+        if(TextUtils.isEmpty(key) || context == null){
+            return;
+        }
+        try{
+            SharedPreferences sharedPreferences = context.getApplicationContext().getSharedPreferences(
+                    "share_info", 0);
+            SharedPreferences.Editor editor1 = sharedPreferences.edit();
+            editor1.putString(key, value);
+            editor1.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static String getUmengAppKey(Context context) {
+        if (TextUtils.isEmpty(UMENG_APP_KEY)){
+            UMENG_APP_KEY = getSharedPreferencesValue(context, CONSTANT_UMENG_APP_KEY);
+        }
+        return UMENG_APP_KEY;
+    }
+
+    public static String getUmengChannel(Context context) {
+        if (TextUtils.isEmpty(UMENG_CHANNEL)){
+            UMENG_CHANNEL = getSharedPreferencesValue(context, CONSTANT_UMENG_CHANNEL);
+        }
+        return UMENG_CHANNEL;
+    }
+
+    public static String getWeixinAppId(Context context) {
+        if (TextUtils.isEmpty(WEIXIN_APP_ID)){
+            WEIXIN_APP_ID = getSharedPreferencesValue(context, CONSTANT_WEIXIN_APP_ID);
+        }
+        return WEIXIN_APP_ID;
+    }
+
+    public static String getWeixinAppSecret(Context context) {
+        if (TextUtils.isEmpty(WEIXIN_APP_SECRET)){
+            WEIXIN_APP_SECRET = getSharedPreferencesValue(context, CONSTANT_WEIXIN_APP_SECRET);
+        }
+        return WEIXIN_APP_SECRET;
+    }
+
+    public static String getSinaAppKey(Context context) {
+        if (TextUtils.isEmpty(SINA_APP_KEY)){
+            SINA_APP_KEY = getSharedPreferencesValue(context, CONSTANT_SINA_APP_KEY);
+        }
+        return SINA_APP_KEY;
+    }
+
+    public static String getSinaAppSecret(Context context) {
+        if (TextUtils.isEmpty(SINA_APP_SECRET)){
+            SINA_APP_SECRET = getSharedPreferencesValue(context, CONSTANT_SINA_APP_SECRET);
+        }
+        return SINA_APP_SECRET;
+    }
+
+    public static String getSinaCallback(Context context) {
+        if (TextUtils.isEmpty(SINA_CALLBACK)){
+            SINA_CALLBACK = getSharedPreferencesValue(context, CONSTANT_SINA_CALLBACK);
+        }
+        return SINA_CALLBACK;
+    }
+
+    public static String getQqAppId(Context context) {
+        if (TextUtils.isEmpty(QQ_APP_ID)){
+            QQ_APP_ID = getSharedPreferencesValue(context, CONSTANT_QQ_APP_ID);
+        }
+        return QQ_APP_ID;
+    }
+
+    public static String getQqAppKey(Context context) {
+        if (TextUtils.isEmpty(QQ_APP_KEY)){
+            QQ_APP_KEY = getSharedPreferencesValue(context, CONSTANT_QQ_APP_KEY);
+        }
+        return QQ_APP_KEY;
     }
 }

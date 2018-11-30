@@ -21,7 +21,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ShareTool.getInstance().initUmengShare(this,
+        ShareTool.getInstance().initUmengShare(this,true,false,
                 UMENG_APP_KEY, UMENG_CHANNEL,
                 WEIXIN_APP_ID, WEIXIN_APP_SECRET,
                 SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK,

@@ -134,7 +134,6 @@ public class SharePopupWindow extends PopupWindow {
 			UMImage umImage = null;
 			if (shareBean.getUmImage() == null){
 				//设置默认分享的缩略图
-				Log.e("pyj","dealShareClick 分享缩略图为空 shareBean.getImageUrl() = " + shareBean.getImageUrl());
 				umImage = new UMImage(mContext, R.drawable.share_default_image);
 			}else{
 				umImage = shareBean.getUmImage();
