@@ -10,4 +10,5 @@
     <color name="share_pop_common_divider">#e8e8e8</color>
     <color name="share_pop_name_color">#e6000000</color>
     <color name="share_pop_btn_text_color">#007dff</color>
+    <color name="share_recyclerview_scrollbar_color">#007dff</color>
 </resources>
