@@ -1,4 +1,4 @@
-package com.umeng.message.lib;
+package com.xy.bizport.share;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -15,10 +15,10 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.umeng.message.lib.net.NetStateUtils;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
+import com.xy.bizport.share.net.NetStateUtils;
 
 
 public class SharePopupWindow extends PopupWindow {
@@ -48,37 +48,37 @@ public class SharePopupWindow extends PopupWindow {
 
         mMenuView = inflater.inflate(R.layout.share_popwindow, null);
         initView();
-       
-        //设置SelectPicPopupWindow的View  
-        this.setContentView(mMenuView);  
-        //设置SelectPicPopupWindow弹出窗体的宽  
+
+        //设置SelectPicPopupWindow的View
+        this.setContentView(mMenuView);
+        //设置SelectPicPopupWindow弹出窗体的宽
         this.setWidth(LayoutParams.FILL_PARENT);
-        //设置SelectPicPopupWindow弹出窗体的高  
+        //设置SelectPicPopupWindow弹出窗体的高
         this.setHeight(LayoutParams.FILL_PARENT);
-        //设置SelectPicPopupWindow弹出窗体可点击  
-        this.setFocusable(true);  
-        //设置SelectPicPopupWindow弹出窗体动画效果  
+        //设置SelectPicPopupWindow弹出窗体可点击
+        this.setFocusable(true);
+        //设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.anim.share_pop_anim);
-        //实例化一个ColorDrawable颜色为半透明  
+        //实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0xb0000000);
-        //设置SelectPicPopupWindow弹出窗体的背景  
-        this.setBackgroundDrawable(dw);  
-        //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框  
+        //设置SelectPicPopupWindow弹出窗体的背景
+        this.setBackgroundDrawable(dw);
+        //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
         mMenuView.setOnTouchListener(new OnTouchListener() {
-              
+
             public boolean onTouch(View v, MotionEvent event) {
-                  
-              int height = mMenuView.findViewById(R.id.share_content_layout).getTop();  
-                int y=(int) event.getY();  
+
+              int height = mMenuView.findViewById(R.id.share_content_layout).getTop();
+                int y=(int) event.getY();
                 if(event.getAction()== MotionEvent.ACTION_UP){
-                    if(y<height){  
-                        dismiss();  
-                    }  
-                }                 
-                return true;  
-            }  
-        });  
-  
+                    if(y<height){
+                        dismiss();
+                    }
+                }
+                return true;
+            }
+        });
+
     }
 
 	public void setShareBean(ShareBean shareBean) {
@@ -108,14 +108,14 @@ public class SharePopupWindow extends PopupWindow {
 				}
 			}
 		});
-		
+
 	}
 
 	private void dealShareClick(int position){
 		try{
 			//接入时，要判断网络，如果无网络则弹出提示
 			if (!NetStateUtils.isNetworkConnected(mContext)){
-				Toast.makeText(mContext,ShareTool.getString(mContext, R.string.share_network_disabled),Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, ShareTool.getString(mContext, R.string.share_network_disabled),Toast.LENGTH_SHORT).show();
 				return;
 			}
 			if (shareBean == null || shareBean.getPlatforms() == null || shareBean.getPlatforms().size() == 0){
@@ -134,7 +134,6 @@ public class SharePopupWindow extends PopupWindow {
 			UMImage umImage = null;
 			if (shareBean.getUmImage() == null){
 				//设置默认分享的缩略图
-				Log.e("pyj","dealShareClick 分享缩略图为空 shareBean.getImageUrl() = " + shareBean.getImageUrl());
 				umImage = new UMImage(mContext, R.drawable.share_default_image);
 			}else{
 				umImage = shareBean.getUmImage();

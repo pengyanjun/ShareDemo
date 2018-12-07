@@ -1,4 +1,4 @@
-package com.xy.bizport.demo.ipmessage;
+package com.xy.rcstest;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.umeng.message.lib.ShareTool;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.xy.bizport.share.ShareTool;
 
 public class SharePopWindowActivity extends Activity implements View.OnClickListener, UMShareListener{
     @Override

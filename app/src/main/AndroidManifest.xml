@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xy.bizport.demo.ipmessage">
+    package="com.xy.rcstest">
 
     <application
         android:allowBackup="true"
@@ -20,9 +20,6 @@
         <activity
             android:name=".SharePopWindowActivity"
              />
-        <activity
-            android:name=".ShareTransparentActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- share start-->
         <!-- wechat callback-->
         <activity
@@ -74,13 +71,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
-        <!-- alipay callback-->
-        <activity
-            android:name=".apshare.ShareEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- share end-->
     </application>
 

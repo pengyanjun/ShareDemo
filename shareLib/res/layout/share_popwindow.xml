@@ -33,7 +33,7 @@
             android:layout_height="@dimen/share_pop_common_divider_height"
             android:background="@color/share_pop_common_divider" />
 
-        <com.umeng.message.lib.ShareNoScroolGridView
+        <com.xy.bizport.share.ShareNoScroolGridView
             android:id="@+id/share_gv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:numColumns="4"
             android:scrollbars="none"
             android:verticalSpacing="18dp" >
-        </com.umeng.message.lib.ShareNoScroolGridView>
+        </com.xy.bizport.share.ShareNoScroolGridView>
 
         <LinearLayout
             android:layout_width="fill_parent"

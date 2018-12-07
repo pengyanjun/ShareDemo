@@ -1,4 +1,4 @@
-package com.xy.bizport.demo.ipmessage.wxapi;
+package com.xy.rcstest.wxapi;
 
 
 
