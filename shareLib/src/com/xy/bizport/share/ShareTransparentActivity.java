@@ -38,7 +38,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     /**
      * 分享面板实现方式：1:GridView;2:RecyclerView
      */
-    private int tag = 2;
+    private int tag = 1;
 
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mRecyclerViewAdapter;
