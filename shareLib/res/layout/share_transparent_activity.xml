@@ -2,9 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:gravity="center_horizontal|bottom"
+    android:orientation="vertical"
     android:background="#80000000">
-    <include
-        android:id="@+id/share_popwindow_layout"
-        layout="@layout/share_popwindow"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        >
+        <include
+            android:id="@+id/share_popwindow_layout"
+            layout="@layout/share_popwindow"/>
+    </ScrollView>
 </LinearLayout>
