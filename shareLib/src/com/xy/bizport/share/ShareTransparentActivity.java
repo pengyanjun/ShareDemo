@@ -22,6 +22,7 @@ import com.umeng.socialize.shareboard.SnsPlatform;
 import com.xy.bizport.share.net.NetStateUtils;
 import com.xy.bizport.share.recyclerview.RecyclerViewAdapter;
 import com.xy.bizport.share.recyclerview.SpacingItemDecoration;
+import com.xy.bizport.share.utils.CheckInstallShareApp;
 
 public class ShareTransparentActivity extends Activity implements UMShareListener{
     private TextView cancelBtn;
@@ -49,6 +50,11 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!CheckInstallShareApp.canShare(this)){
+            Toast.makeText(this,"您的手机没有安装支持分享的应用哦",Toast.LENGTH_SHORT).show();
+            finish();
+            overridePendingTransition(0,0);
+        }
         setContentView(R.layout.share_transparent_activity);
         initView();
         initData();
