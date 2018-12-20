@@ -23,6 +23,7 @@ import com.xy.bizport.share.net.NetStateUtils;
 import com.xy.bizport.share.recyclerview.RecyclerViewAdapter;
 import com.xy.bizport.share.recyclerview.SpacingItemDecoration;
 import com.xy.bizport.share.utils.CheckInstallShareApp;
+import com.xy.bizport.share.utils.LogManager;
 
 public class ShareTransparentActivity extends Activity implements UMShareListener{
     private TextView cancelBtn;
@@ -121,14 +122,26 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                 Toast.makeText(this,"分享平台为空",Toast.LENGTH_SHORT).show();
                 return;
             }
+            LogManager.e("pyj", "---------------------------------------------------------------------------------"
+                    + "\n"
+                    + "---------------------------------------------------------------------------------"+ "\n"
+                    + "---------------------------------------------------------------------------------");
+            LogManager.e("pyj", "ShareActivity dealShareClick sharetitle = "+shareBean.getSharetitle()
+                    + ","+ "\n"+" shareContent = " + shareBean.getShareContent()
+                    + ","+ "\n"+" shareUrl = " + shareBean.getShareUrl()
+                    + ","+ "\n"+" shareImageUrl = " + shareBean.getImageUrl()
+                    + ","+ "\n"+" shareUMImage = " + shareBean.getUmImage());
             if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
+                LogManager.e("pyj", "ShareActivity dealShareClick getImageBitmap imageUrl = "+imageUrl);
                 ShareTool.getInstance().getImageBitmap(this, shareBean.getImageUrl(), shareBean, 100, 100);
             }
             UMImage umImage = null;
             if (shareBean.getUmImage() == null){
                 //设置默认分享的缩略图
+                LogManager.e("pyj", "ShareActivity dealShareClick 设置默认的分享的缩略图");
                 umImage = new UMImage(this, R.drawable.share_default_image);
             }else{
+                LogManager.e("pyj", "ShareActivity dealShareClick 设置下载的分享的缩略图");
                 umImage = shareBean.getUmImage();
             }
 
@@ -156,7 +169,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
             shareContent = bundle.getString(ShareTool.SHARE_CONTENT);
             shareUrl = bundle.getString(ShareTool.SHARE_URL);
             imageUrl = bundle.getString(ShareTool.SHARE_IMAGE_URL);
-
 
             shareBean = ShareTool.getInstance().getShareData(this, sharetitle, shareContent, shareUrl, imageUrl);
 
