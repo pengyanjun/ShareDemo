@@ -184,7 +184,11 @@ public class ShareTool {
      * @param shareListener 分享结果回调
      */
     public void share(Context context, SHARE_MEDIA platform, String url, String title, UMImage umImage, String content, UMShareListener shareListener){
-
+        LogManager.e("pyj", "ShareTool share sharetitle = " + title
+                + ","+ "\n"+" shareContent = " + content
+                + ","+ "\n"+" shareUrl = " + url
+                + ","+ "\n"+" shareUMImage = " + umImage
+                + ","+ "\n"+" SHARE_MEDIA = " + platform.toString());
         UMWeb web = new UMWeb(url);
         web.setTitle(title);//标题
         web.setThumb(umImage); //缩略图
@@ -350,6 +354,32 @@ public class ShareTool {
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         // 下载失败回调
                         LogManager.e("pyj", "ShareTool getImageBitmap onLoadFailed");
+                    }
+                });
+    }
+
+    public void getImageBitmap(final Context context, final String image, final ShareBean shareBean, final int width, final int height, final IDownloadBitmapCallBack callBack) {
+        Glide.with(context.getApplicationContext())
+                .load(image)
+                .asBitmap()
+                .toBytes()
+                .into(new SimpleTarget<byte[]>(width, height) {
+                    @Override
+                    public void onResourceReady(byte[] bytes, GlideAnimation<? super byte[]> glideAnimation) {
+                        // 下载成功回调函数
+                        LogManager.e("pyj", "ShareTool getImageBitmap onResourceReady");
+                        if (callBack != null){
+                            callBack.downloadBitmapCallBack(0, bytes, null);
+                        }
+                    }
+
+                    @Override
+                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                        // 下载失败回调
+                        LogManager.e("pyj", "ShareTool getImageBitmap onLoadFailed");
+                        if (callBack != null){
+                            callBack.downloadBitmapCallBack(1, null, e.toString());
+                        }
                     }
                 });
     }

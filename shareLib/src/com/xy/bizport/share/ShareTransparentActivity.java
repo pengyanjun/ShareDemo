@@ -116,7 +116,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                 Toast.makeText(this,"分享数据为空",Toast.LENGTH_SHORT).show();
                 return;
             }
-            SnsPlatform platform = shareBean.getPlatforms().get(position);
+            final SnsPlatform platform = shareBean.getPlatforms().get(position);
 
             if (platform.mPlatform == null){
                 Toast.makeText(this,"分享平台为空",Toast.LENGTH_SHORT).show();
@@ -131,31 +131,44 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                     + ","+ "\n"+" shareUrl = " + shareBean.getShareUrl()
                     + ","+ "\n"+" shareImageUrl = " + shareBean.getImageUrl()
                     + ","+ "\n"+" shareUMImage = " + shareBean.getUmImage());
-            if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
-                LogManager.e("pyj", "ShareActivity dealShareClick getImageBitmap imageUrl = "+imageUrl);
-                ShareTool.getInstance().getImageBitmap(this, shareBean.getImageUrl(), shareBean, 100, 100);
-            }
-            UMImage umImage = null;
-            if (shareBean.getUmImage() == null){
-                //设置默认分享的缩略图
-                LogManager.e("pyj", "ShareActivity dealShareClick 设置默认的分享的缩略图");
-                umImage = new UMImage(this, R.drawable.share_default_image);
-            }else{
-                LogManager.e("pyj", "ShareActivity dealShareClick 设置下载的分享的缩略图");
-                umImage = shareBean.getUmImage();
-            }
+            if (shareBean.getUmImage() != null){
+                LogManager.e("pyj", "ShareActivity dealShareClick UmImage不为空 share");
+                share(platform, shareBean.getUmImage());
 
-            share_popwindow_layout.setVisibility(View.GONE);
-            if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform) || SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
-                isNeedClose = true;
-            }else {
-                isNeedClose = false;
+            }else if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
+                LogManager.e("pyj", "ShareActivity dealShareClick UmImage为空， getImageBitmap");
+                ShareTool.getInstance().getImageBitmap(this, shareBean.getImageUrl(), shareBean, 100, 100, new IDownloadBitmapCallBack() {
+                    @Override
+                    public void downloadBitmapCallBack(int code, byte[] bytes, String message) {
+                        if (code == 0){
+                            //下载成功
+                            LogManager.e("pyj", "ShareActivity dealShareClick downloadBitmapCallBack 下载成功");
+                            shareBean.setUmImage(new UMImage(ShareTransparentActivity.this, bytes));
+                            share(platform, shareBean.getUmImage());
+                        }else {
+                            //下载失败
+                            Toast.makeText(ShareTransparentActivity.this,"分享图片下载失败，请稍后重试",Toast.LENGTH_SHORT).show();
+                            LogManager.e("pyj", "ShareActivity dealShareClick downloadBitmapCallBack 下载失败 message = "+message);
+                        }
+
+                    }
+                });
             }
-            ShareTool.getInstance().share(this, platform.mPlatform,shareBean.getShareUrl(),
-                    shareBean.getSharetitle(), umImage,shareBean.getShareContent(), this);
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void share(SnsPlatform platform, UMImage umImage){
+        LogManager.e("pyj", "ShareActivity share");
+        share_popwindow_layout.setVisibility(View.GONE);
+        if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform) || SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
+            isNeedClose = true;
+        }else {
+            isNeedClose = false;
+        }
+        ShareTool.getInstance().share(this, platform.mPlatform,shareBean.getShareUrl(),
+                shareBean.getSharetitle(), umImage,shareBean.getShareContent(), this);
     }
 
     private void initData(){
