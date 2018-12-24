@@ -32,7 +32,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentTheme" >
             <intent-filter>
-                <action android:name="com.xy.bizport.share.ACTION_SHARE" />
+                <action android:name="com.xy.bizport.ACTION_SHARE" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

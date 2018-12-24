@@ -16,9 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.xy.bizport.share.net.NetStateUtils;
+import com.xy.bizport.share.utils.LogManager;
 
 
 public class SharePopupWindow extends PopupWindow {
@@ -122,29 +124,56 @@ public class SharePopupWindow extends PopupWindow {
 				Toast.makeText(mContext,"分享数据为空",Toast.LENGTH_SHORT).show();
 				return;
 			}
-			SnsPlatform platform = (SnsPlatform)sharePopAdapter.getItem(position);
+			final SnsPlatform platform = (SnsPlatform)sharePopAdapter.getItem(position);
 
 			if (platform.mPlatform == null){
 				Toast.makeText(mContext,"分享平台为空",Toast.LENGTH_SHORT).show();
 				return;
 			}
-			if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
-				ShareTool.getInstance().getImageBitmap(mContext, shareBean.getImageUrl(), shareBean, 100, 100);
-			}
-			UMImage umImage = null;
-			if (shareBean.getUmImage() == null){
-				//设置默认分享的缩略图
-				umImage = new UMImage(mContext, R.drawable.share_default_image);
-			}else{
-				umImage = shareBean.getUmImage();
-			}
 
-			dismiss();
-			ShareTool.getInstance().share(mContext, platform.mPlatform,shareBean.getShareUrl(),
-					shareBean.getSharetitle(), umImage,shareBean.getShareContent(), shareListener);
+			LogManager.e("pyj", "---------------------------------------------------------------------------------"
+					+ "\n"
+					+ "---------------------------------------------------------------------------------"+ "\n"
+					+ "---------------------------------------------------------------------------------");
+			LogManager.e("pyj", "SharePopupWindow dealShareClick sharetitle = "+shareBean.getSharetitle()
+					+ ","+ "\n"+" shareContent = " + shareBean.getShareContent()
+					+ ","+ "\n"+" shareUrl = " + shareBean.getShareUrl()
+					+ ","+ "\n"+" shareImageUrl = " + shareBean.getImageUrl()
+					+ ","+ "\n"+" shareUMImage = " + shareBean.getUmImage());
+
+			if (shareBean.getUmImage() != null){
+				LogManager.e("pyj", "SharePopupWindow dealShareClick UmImage不为空 share");
+				share(platform, shareBean.getUmImage());
+
+			}else if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
+				LogManager.e("pyj", "SharePopupWindow dealShareClick UmImage为空， getImageBitmap");
+				ShareTool.getInstance().getImageBitmap(mContext, shareBean.getImageUrl(), shareBean, 100, 100, new IDownloadBitmapCallBack() {
+					@Override
+					public void downloadBitmapCallBack(int code, byte[] bytes, String message) {
+						if (code == 0){
+							//下载成功
+							LogManager.e("pyj", "SharePopupWindow dealShareClick downloadBitmapCallBack 下载成功");
+							shareBean.setUmImage(new UMImage(mContext, bytes));
+							share(platform, shareBean.getUmImage());
+						}else {
+							//下载失败
+							Toast.makeText(mContext,"分享图片下载失败，请稍后重试",Toast.LENGTH_SHORT).show();
+							LogManager.e("pyj", "SharePopupWindow dealShareClick downloadBitmapCallBack 下载失败 message = "+message);
+						}
+
+					}
+				});
+			}
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+	}
+
+	private void share(SnsPlatform platform, UMImage umImage){
+		LogManager.e("pyj", "SharePopupWindow share");
+		dismiss();
+		ShareTool.getInstance().share(mContext, platform.mPlatform,shareBean.getShareUrl(),
+				shareBean.getSharetitle(), umImage,shareBean.getShareContent(), shareListener);
 	}
 
 }
