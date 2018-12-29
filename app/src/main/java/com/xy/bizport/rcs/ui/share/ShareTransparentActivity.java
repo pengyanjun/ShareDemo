@@ -1,6 +1,5 @@
-package com.xy.bizport.share;
+package com.xy.bizport.rcs.ui.share;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,18 +13,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.shareboard.SnsPlatform;
-import com.xy.bizport.share.net.NetStateUtils;
-import com.xy.bizport.share.recyclerview.RecyclerViewAdapter;
-import com.xy.bizport.share.recyclerview.SpacingItemDecoration;
-import com.xy.bizport.share.utils.CheckInstallShareApp;
-import com.xy.bizport.share.utils.LogManager;
+import com.xy.bizport.androidcommon.util.LogManager;
+import com.xy.bizport.rcs.ui.share.recyclerview.RecyclerViewAdapter;
+import com.xy.bizport.rcs.ui.share.recyclerview.SpacingItemDecoration;
+import com.xy.bizport.share.lib.BizportShare;
+import com.xy.bizport.share.lib.CheckInstallShareApp;
+import com.xy.bizport.share.lib.IDownloadBitmapCallBack;
+import com.xy.bizport.share.lib.NetStateUtils;
+import com.xy.bizport.share.lib.ShareBaseActivity;
+import com.xy.bizport.share.lib.ShareBean;
+import com.xy.bizport.share.lib.ShareConstant;
+import com.xy.bizport.share.lib.ShareImage;
+import com.xy.bizport.share.lib.ShareMedia;
+import com.xy.bizport.share.lib.SharePlatform;
+import com.xy.bizport.share.lib.ShareTool;
+import com.xy.rcstest.R;
 
-public class ShareTransparentActivity extends Activity implements UMShareListener{
+public class ShareTransparentActivity extends ShareBaseActivity {
+
     private TextView cancelBtn;
     private ShareNoScroolGridView shareGridView;
     private SharePopAdapter sharePopAdapter;
@@ -35,8 +40,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     private String imageUrl;
     private LinearLayout share_popwindow_layout;
 
-    //是否需手动关闭界面；目前发现进入微信，朋友圈，支付宝解锁界面，按返回键返回demo时有透明阴影，透明Activity没有销毁。微信，朋友圈，支付宝需要手动关闭
-    private boolean isNeedClose = false;
+
     /**
      * 分享面板实现方式：1:GridView;2:RecyclerView
      */
@@ -44,7 +48,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
 
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mRecyclerViewAdapter;
-    private int columns = 4;//列数
     private ShareBean shareBean = null;
 
 
@@ -72,7 +75,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
             shareGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    dealShareClick(position);
+                    shareItemClick(position);
                 }
             });
         }else if (tag ==2){
@@ -88,7 +91,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
             mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    dealShareClick(position);
+                    shareItemClick(position);
                 }
             });
         }
@@ -105,9 +108,8 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
 
     }
 
-    private void dealShareClick(int position){
+    public void shareItemClick(int position) {
         try{
-            //接入时，要判断网络，如果无网络则弹出提示
             if (!NetStateUtils.isNetworkConnected(this)){
                 Toast.makeText(this, ShareTool.getString(this, R.string.share_network_disabled),Toast.LENGTH_SHORT).show();
                 return;
@@ -116,7 +118,7 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                 Toast.makeText(this,"分享数据为空",Toast.LENGTH_SHORT).show();
                 return;
             }
-            final SnsPlatform platform = shareBean.getPlatforms().get(position);
+            final SharePlatform platform = shareBean.getPlatforms().get(position);
 
             if (platform.mPlatform == null){
                 Toast.makeText(this,"分享平台为空",Toast.LENGTH_SHORT).show();
@@ -126,29 +128,29 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                     + "\n"
                     + "---------------------------------------------------------------------------------"+ "\n"
                     + "---------------------------------------------------------------------------------");
-            LogManager.e("pyj", "ShareActivity dealShareClick sharetitle = "+shareBean.getSharetitle()
+            LogManager.e("pyj", "ShareTransparentActivity shareItemClick sharetitle = "+shareBean.getSharetitle()
                     + ","+ "\n"+" shareContent = " + shareBean.getShareContent()
                     + ","+ "\n"+" shareUrl = " + shareBean.getShareUrl()
                     + ","+ "\n"+" shareImageUrl = " + shareBean.getImageUrl()
                     + ","+ "\n"+" shareUMImage = " + shareBean.getUmImage());
             if (shareBean.getUmImage() != null){
-                LogManager.e("pyj", "ShareActivity dealShareClick UmImage不为空 share");
+                LogManager.e("pyj", "ShareTransparentActivity shareItemClick UmImage不为空 share");
                 share(platform, shareBean.getUmImage());
 
             }else if (shareBean.getUmImage() == null && !TextUtils.isEmpty(shareBean.getImageUrl())){
-                LogManager.e("pyj", "ShareActivity dealShareClick UmImage为空， getImageBitmap");
-                ShareTool.getInstance().getImageBitmap(this, shareBean.getImageUrl(), shareBean, 100, 100, new IDownloadBitmapCallBack() {
+                LogManager.e("pyj", "ShareTransparentActivity shareItemClick UmImage为空， getImageBitmap");
+                BizportShare.getInstance().getImageBitmap(this, shareBean.getImageUrl(), shareBean, 100, 100, new IDownloadBitmapCallBack() {
                     @Override
                     public void downloadBitmapCallBack(int code, byte[] bytes, String message) {
                         if (code == 0){
                             //下载成功
-                            LogManager.e("pyj", "ShareActivity dealShareClick downloadBitmapCallBack 下载成功");
-                            shareBean.setUmImage(new UMImage(ShareTransparentActivity.this, bytes));
+                            LogManager.e("pyj", "ShareTransparentActivity shareItemClick downloadBitmapCallBack 下载成功");
+                            shareBean.setUmImage(new ShareImage(ShareTransparentActivity.this, bytes));
                             share(platform, shareBean.getUmImage());
                         }else {
                             //下载失败
                             Toast.makeText(ShareTransparentActivity.this,"分享图片下载失败，请稍后重试",Toast.LENGTH_SHORT).show();
-                            LogManager.e("pyj", "ShareActivity dealShareClick downloadBitmapCallBack 下载失败 message = "+message);
+                            LogManager.e("pyj", "ShareTransparentActivity shareItemClick downloadBitmapCallBack 下载失败 message = "+message);
                         }
 
                     }
@@ -159,15 +161,15 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
         }
     }
 
-    private void share(SnsPlatform platform, UMImage umImage){
-        LogManager.e("pyj", "ShareActivity share");
+    private void share(SharePlatform platform, ShareImage umImage){
+        LogManager.e("pyj", "ShareTransparentActivity share");
         share_popwindow_layout.setVisibility(View.GONE);
-        if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform) || SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
+        if (ShareMedia.WEIXIN.equals(platform.mPlatform) || ShareMedia.WEIXIN_CIRCLE.equals(platform.mPlatform)){
             isNeedClose = true;
         }else {
             isNeedClose = false;
         }
-        ShareTool.getInstance().share(this, platform.mPlatform,shareBean.getShareUrl(),
+        BizportShare.getInstance().share(this, platform.mPlatform,shareBean.getShareUrl(),
                 shareBean.getSharetitle(), umImage,shareBean.getShareContent(), this);
     }
 
@@ -178,12 +180,12 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
                 return;
             }
             Bundle bundle = intent.getExtras();
-            sharetitle = bundle.getString(ShareTool.SHARE_TITLE);
-            shareContent = bundle.getString(ShareTool.SHARE_CONTENT);
-            shareUrl = bundle.getString(ShareTool.SHARE_URL);
-            imageUrl = bundle.getString(ShareTool.SHARE_IMAGE_URL);
+            sharetitle = bundle.getString(ShareConstant.SHARE_TITLE);
+            shareContent = bundle.getString(ShareConstant.SHARE_CONTENT);
+            shareUrl = bundle.getString(ShareConstant.SHARE_URL);
+            imageUrl = bundle.getString(ShareConstant.SHARE_IMAGE_URL);
 
-            shareBean = ShareTool.getInstance().getShareData(this, sharetitle, shareContent, shareUrl, imageUrl);
+            shareBean = BizportShare.getInstance().getShareData(this, sharetitle, shareContent, shareUrl, imageUrl);
 
             if (tag ==1){
                 sharePopAdapter.notifyDataChage(shareBean);
@@ -217,12 +219,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_UP:
@@ -243,33 +239,6 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        UMShareAPI.get(this).release();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected void onRestart() {
         super.onRestart();
         if (isNeedClose){
@@ -277,66 +246,14 @@ public class ShareTransparentActivity extends Activity implements UMShareListene
         }
     }
 
-    private void close(){
-        try{
-            isNeedClose = false;
-            finish();
-            overridePendingTransition(0,0);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @descrption 分享开始的回调
-     * @param platform 平台类型
-     */
     @Override
-    public void onStart(SHARE_MEDIA platform) {
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**
-     * @descrption 分享成功的回调
-     * @param platform 平台类型
-     */
     @Override
-    public void onResult(SHARE_MEDIA platform) {
-        if (!SHARE_MEDIA.WEIXIN.equals(platform) && !SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform)){
-            //微信分享取消分享之后的回调仍是分享成功，斌哥说微信分享干脆不弹提示了
-            Toast.makeText(this,"成功了", Toast.LENGTH_LONG).show();
-        }
-//        Intent data=new Intent();
-//        data.putExtra("result", "成功了");
-//        setResult(MainActivity.SHARE_RESULT_CODE, data);
-        close();
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
-    /**
-     * @descrption 分享失败的回调
-     * @param platform 平台类型
-     * @param t 错误原因
-     */
-    @Override
-    public void onError(SHARE_MEDIA platform, Throwable t) {
-        Toast.makeText(this,"失败"+t.getMessage(),Toast.LENGTH_LONG).show();
-//        Intent data=new Intent();
-//        data.putExtra("result", "失败"+t.getMessage());
-//        setResult(MainActivity.SHARE_RESULT_CODE, data);
-        close();
-    }
-
-    /**
-     * @descrption 分享取消的回调
-     * @param platform 平台类型
-     */
-    @Override
-    public void onCancel(SHARE_MEDIA platform) {
-//        Toast.makeText(this,"取消了",Toast.LENGTH_LONG).show();
-//        Intent data=new Intent();
-//        data.putExtra("result", "取消了");
-//        setResult(MainActivity.SHARE_RESULT_CODE, data);
-        close();
-
-    }
 }

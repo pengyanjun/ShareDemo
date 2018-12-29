@@ -1,7 +1,4 @@
-package com.xy.bizport.share;
-
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.shareboard.SnsPlatform;
+package com.xy.bizport.share.lib;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +8,7 @@ public class ShareBean implements Serializable{
     /**
      * 分享平台
      */
-    private List<SnsPlatform> platforms;
+    private List<SharePlatform> platforms;
     /**
      * 分享的链接
      */
@@ -25,14 +22,9 @@ public class ShareBean implements Serializable{
      */
     private String shareContent;
     /**
-     * 分享的图片，UMImage的构建有如下几种形式
-     * UMImage image = new UMImage(ShareActivity.this, "imageurl");//网络图片
-     * UMImage image = new UMImage(ShareActivity.this, file);//本地文件
-     * UMImage image = new UMImage(ShareActivity.this, R.drawable.xxx);//资源文件
-     * UMImage image = new UMImage(ShareActivity.this, bitmap);//bitmap文件
-     * UMImage image = new UMImage(ShareActivity.this, byte[]);//字节流
+     * 分享的图片对象
      */
-    private UMImage umImage;
+    private ShareImage umImage;
     /**
      * 分享的图片下载地址
      */
@@ -41,7 +33,7 @@ public class ShareBean implements Serializable{
     public ShareBean() {
     }
 
-    public ShareBean(List<SnsPlatform> platforms, String shareUrl, String sharetitle, String shareContent, String imageUrl) {
+    public ShareBean(List<SharePlatform> platforms, String shareUrl, String sharetitle, String shareContent, String imageUrl) {
         this.platforms = platforms;
         this.shareUrl = shareUrl;
         this.sharetitle = sharetitle;
@@ -49,11 +41,11 @@ public class ShareBean implements Serializable{
         this.imageUrl = imageUrl;
     }
 
-    public List<SnsPlatform> getPlatforms() {
+    public List<SharePlatform> getPlatforms() {
         return platforms;
     }
 
-    public void setPlatforms(List<SnsPlatform> platforms) {
+    public void setPlatforms(List<SharePlatform> platforms) {
         this.platforms = platforms;
     }
 
@@ -81,11 +73,11 @@ public class ShareBean implements Serializable{
         this.shareContent = shareContent;
     }
 
-    public UMImage getUmImage() {
+    public ShareImage getUmImage() {
         return umImage;
     }
 
-    public void setUmImage(UMImage umImage) {
+    public void setUmImage(ShareImage umImage) {
         this.umImage = umImage;
     }
 

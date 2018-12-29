@@ -1,4 +1,4 @@
-package com.xy.bizport.share;
+package com.xy.bizport.rcs.ui.share;
 
 import android.content.Context;
 import android.util.AttributeSet;

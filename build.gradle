@@ -19,6 +19,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "http://192.168.1.98:8081/repository/sdk"
+        }
     }
 }
 

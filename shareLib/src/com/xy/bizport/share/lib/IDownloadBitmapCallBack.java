@@ -1,4 +1,4 @@
-package com.xy.bizport.share;
+package com.xy.bizport.share.lib;
 
 public interface IDownloadBitmapCallBack {
 

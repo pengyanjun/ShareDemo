@@ -22,13 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SharePopWindowActivity"
-             />
         <!-- share start-->
 
         <activity
-            android:name="com.xy.bizport.share.ShareTransparentActivity"
+            android:name="com.xy.bizport.rcs.ui.share.ShareTransparentActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/TransparentTheme" >
             <intent-filter>

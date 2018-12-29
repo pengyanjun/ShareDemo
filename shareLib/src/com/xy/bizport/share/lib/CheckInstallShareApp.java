@@ -1,4 +1,4 @@
-package com.xy.bizport.share.utils;
+package com.xy.bizport.share.lib;
 
 import android.content.ComponentName;
 import android.content.Context;

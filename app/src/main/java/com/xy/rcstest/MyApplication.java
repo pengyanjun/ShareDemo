@@ -2,7 +2,8 @@ package com.xy.rcstest;
 
 import android.app.Application;
 
-import com.xy.bizport.share.ShareTool;
+import com.xy.bizport.share.lib.BizportShare;
+
 
 public class MyApplication extends Application {
     private static final String UMENG_APP_KEY = "586b0c96a40fa36bec000291";
@@ -21,7 +22,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ShareTool.getInstance().initUmengShare(this,true,false,
+        BizportShare.getInstance().initUmengShare(this,true,false,
                 UMENG_APP_KEY, UMENG_CHANNEL,
                 WEIXIN_APP_ID, WEIXIN_APP_SECRET,
                 SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK,

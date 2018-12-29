@@ -7,14 +7,6 @@
     >
 
     <Button
-        android:id="@+id/pop_btn"
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="打开分享页面"
-        android:layout_marginBottom="20dp"
-         />
-    <Button
         android:id="@+id/share_activity_btn"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"

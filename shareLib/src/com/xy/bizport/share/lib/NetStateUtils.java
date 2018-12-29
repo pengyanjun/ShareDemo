@@ -1,4 +1,4 @@
-package com.xy.bizport.share.net;
+package com.xy.bizport.share.lib;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -1,4 +1,4 @@
-package com.xy.bizport.share.recyclerview;
+package com.xy.bizport.rcs.ui.share.recyclerview;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

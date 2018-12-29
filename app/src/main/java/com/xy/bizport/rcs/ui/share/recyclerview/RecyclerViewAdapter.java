@@ -1,4 +1,4 @@
-package com.xy.bizport.share.recyclerview;
+package com.xy.bizport.rcs.ui.share.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.shareboard.SnsPlatform;
-import com.xy.bizport.share.R;
-import com.xy.bizport.share.ShareBean;
-import com.xy.bizport.share.ShareTool;
+import com.xy.bizport.share.lib.ShareBean;
+import com.xy.bizport.share.lib.ShareMedia;
+import com.xy.bizport.share.lib.SharePlatform;
+import com.xy.bizport.share.lib.ShareTool;
+import com.xy.rcstest.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ShareViewHolder>{
 
@@ -40,11 +40,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.notifyDataSetChanged();
     }
 
-    public ShareBean getShareBean() {
-        return shareBean;
-    }
-
-
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
@@ -59,21 +54,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final ShareViewHolder viewHolder, int position) {
         try {
             if (shareBean != null && shareBean.getPlatforms() != null && shareBean.getPlatforms().size() >0) {
-                SnsPlatform platform = shareBean.getPlatforms().get(position);
+                SharePlatform platform = shareBean.getPlatforms().get(position);
 
-                if (SHARE_MEDIA.WEIXIN_CIRCLE.equals(platform.mPlatform)){
+                if (ShareMedia.WEIXIN_CIRCLE.equals(platform.mPlatform)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin_circle));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_wxcircle));
-                } else if (SHARE_MEDIA.WEIXIN.equals(platform.mPlatform)){
+                } else if (ShareMedia.WEIXIN.equals(platform.mPlatform)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_weixin));
-                } else if (SHARE_MEDIA.QQ.equals(platform.mPlatform)){
+                } else if (ShareMedia.QQ.equals(platform.mPlatform)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qq));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qq));
-                } else if (SHARE_MEDIA.QZONE.equals(platform.mPlatform)){
+                } else if (ShareMedia.QZONE.equals(platform.mPlatform)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qzone));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qzone));
-                } else if (SHARE_MEDIA.SINA.equals(platform.mPlatform)){
+                } else if (ShareMedia.SINA.equals(platform.mPlatform)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_sina));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_sina));
                 }
