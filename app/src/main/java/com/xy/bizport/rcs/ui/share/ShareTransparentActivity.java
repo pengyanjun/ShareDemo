@@ -2,20 +2,21 @@ package com.xy.bizport.rcs.ui.share;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xy.bizport.androidcommon.util.LogManager;
+import com.xy.bizport.rcs.ui.share.recyclerview.GridLayoutItemDecoration;
 import com.xy.bizport.rcs.ui.share.recyclerview.RecyclerViewAdapter;
-import com.xy.bizport.rcs.ui.share.recyclerview.SpacingItemDecoration;
+import com.xy.bizport.rcs.ui.share.recyclerview.LinearLayoutItemDecoration;
 import com.xy.bizport.share.lib.BizportShare;
 import com.xy.bizport.share.lib.CheckInstallShareApp;
 import com.xy.bizport.share.lib.IDownloadBitmapCallBack;
@@ -32,8 +33,6 @@ import com.xy.rcstest.R;
 public class ShareTransparentActivity extends ShareBaseActivity {
 
     private TextView cancelBtn;
-    private ShareNoScroolGridView shareGridView;
-    private SharePopAdapter sharePopAdapter;
     private String sharetitle;
     private String shareContent;
     private String shareUrl;
@@ -42,13 +41,15 @@ public class ShareTransparentActivity extends ShareBaseActivity {
 
 
     /**
-     * 分享面板实现方式：1:GridView;2:RecyclerView
+     * 分享面板呈现方式：1:GridView方式排列;2:水平单行排列
      */
-    private int tag = 1;
+    private int type = 1;
 
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private ShareBean shareBean = null;
+
+    private int columns = 4;
 
 
     @Override
@@ -66,36 +67,15 @@ public class ShareTransparentActivity extends ShareBaseActivity {
 
     private void initView(){
         mRecyclerView = (RecyclerView)this.findViewById(R.id.share_recycler_view);
-        shareGridView = (ShareNoScroolGridView)this.findViewById(R.id.share_gv);
-        if (tag ==1){
-            shareGridView.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-            sharePopAdapter = new SharePopAdapter(null, this);
-            shareGridView.setAdapter(sharePopAdapter);
-            shareGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    shareItemClick(position);
-                }
-            });
-        }else if (tag ==2){
-            shareGridView.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.VISIBLE);
-            LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this);
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            mRecyclerView.setLayoutManager(linearLayoutManager);
-            mRecyclerView.setHasFixedSize(true);
-
-            mRecyclerViewAdapter = new RecyclerViewAdapter(null, this);
-            mRecyclerView.setAdapter(mRecyclerViewAdapter);
-            mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    shareItemClick(position);
-                }
-            });
-        }
-
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerViewAdapter = new RecyclerViewAdapter(null, this);
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                shareItemClick(position);
+            }
+        });
 
         cancelBtn = (TextView) this.findViewById(R.id.cancel_btn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +87,54 @@ public class ShareTransparentActivity extends ShareBaseActivity {
         share_popwindow_layout = (LinearLayout) this.findViewById(R.id.share_popwindow_layout);
 
     }
+
+    private void initData(){
+        try{
+            Intent intent = this.getIntent();
+            if (intent == null || intent.getExtras() == null) {
+                return;
+            }
+            Bundle bundle = intent.getExtras();
+            sharetitle = bundle.getString(ShareConstant.SHARE_TITLE);
+            shareContent = bundle.getString(ShareConstant.SHARE_CONTENT);
+            shareUrl = bundle.getString(ShareConstant.SHARE_URL);
+            imageUrl = bundle.getString(ShareConstant.SHARE_IMAGE_URL);
+
+            shareBean = BizportShare.getInstance().getShareData(this, sharetitle, shareContent, shareUrl, imageUrl);
+
+            setRecyclerViewStyle(shareBean.getPlatforms().size());
+            mRecyclerViewAdapter.notifyDataChage(shareBean);
+
+        }catch (Exception e){
+
+        }
+    }
+
+
+    private void setRecyclerViewStyle(int size){
+        int grid_item_horizontal_space = getResources().getDimensionPixelSize(R.dimen.grid_item_horizontal_space);
+        int grid_item_vertical_space = getResources().getDimensionPixelSize(R.dimen.grid_item_vertical_space);
+
+        int grid_padding_left = getResources().getDimensionPixelSize(R.dimen.grid_padding_left);
+        int grid_padding_top = getResources().getDimensionPixelSize(R.dimen.grid_padding_top);
+        int grid_padding_right = getResources().getDimensionPixelSize(R.dimen.grid_padding_right);
+        int grid_padding_bottom = getResources().getDimensionPixelSize(R.dimen.grid_padding_bottom);
+
+        if (type == 1 ){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, columns));
+
+            mRecyclerView.addItemDecoration(new GridLayoutItemDecoration(grid_item_horizontal_space, grid_item_vertical_space, columns));
+            mRecyclerView.setPadding(grid_padding_left, grid_padding_top, grid_padding_right, grid_padding_bottom);
+        }else if (type == 2 ){
+            LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            mRecyclerView.setLayoutManager(linearLayoutManager);
+
+            mRecyclerView.addItemDecoration(new LinearLayoutItemDecoration(size,grid_item_horizontal_space, grid_padding_left, grid_padding_right));
+            mRecyclerView.setPadding(0, grid_padding_top, 0, grid_padding_bottom);
+        }
+    }
+
 
     public void shareItemClick(int position) {
         try{
@@ -171,51 +199,6 @@ public class ShareTransparentActivity extends ShareBaseActivity {
         }
         BizportShare.getInstance().share(this, platform.mPlatform,shareBean.getShareUrl(),
                 shareBean.getSharetitle(), umImage,shareBean.getShareContent(), this);
-    }
-
-    private void initData(){
-        try{
-            Intent intent = this.getIntent();
-            if (intent == null || intent.getExtras() == null) {
-                return;
-            }
-            Bundle bundle = intent.getExtras();
-            sharetitle = bundle.getString(ShareConstant.SHARE_TITLE);
-            shareContent = bundle.getString(ShareConstant.SHARE_CONTENT);
-            shareUrl = bundle.getString(ShareConstant.SHARE_URL);
-            imageUrl = bundle.getString(ShareConstant.SHARE_IMAGE_URL);
-
-            shareBean = BizportShare.getInstance().getShareData(this, sharetitle, shareContent, shareUrl, imageUrl);
-
-            if (tag ==1){
-                sharePopAdapter.notifyDataChage(shareBean);
-            }else if (tag ==2){
-                setItemPadding(shareBean.getPlatforms().size());
-                mRecyclerViewAdapter.notifyDataChage(shareBean);
-            }
-
-        }catch (Exception e){
-
-        }
-    }
-
-    private void setItemPadding(int size){
-//        int grid_item_padding_left = getResources().getDimensionPixelSize(R.dimen.grid_item_padding_left);
-//        int grid_item_padding_top = getResources().getDimensionPixelSize(R.dimen.grid_item_padding_top);
-//
-//        int grid_padding_left = getResources().getDimensionPixelSize(R.dimen.grid_padding_left);
-//        int grid_padding_top = getResources().getDimensionPixelSize(R.dimen.grid_padding_top);
-//        int grid_padding_right = getResources().getDimensionPixelSize(R.dimen.grid_padding_right);
-//        int grid_padding_bottom = getResources().getDimensionPixelSize(R.dimen.grid_padding_bottom);
-//
-//        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(size, columns, grid_item_padding_left, grid_item_padding_top, grid_padding_left, grid_padding_top, grid_padding_right, grid_padding_bottom));
-
-        int grid_item_padding_left = getResources().getDimensionPixelSize(R.dimen.grid_item_padding_left);
-        int grid_padding_left = getResources().getDimensionPixelSize(R.dimen.grid_padding_left);
-        int grid_padding_top = getResources().getDimensionPixelSize(R.dimen.grid_padding_top);
-        int grid_padding_right = getResources().getDimensionPixelSize(R.dimen.grid_padding_right);
-        int grid_padding_bottom = getResources().getDimensionPixelSize(R.dimen.grid_padding_bottom);
-        mRecyclerView.addItemDecoration(new SpacingItemDecoration(size,grid_item_padding_left, grid_padding_left,grid_padding_top,  grid_padding_right, grid_padding_bottom));
     }
 
     @Override

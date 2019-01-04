@@ -33,27 +33,13 @@
             android:layout_height="@dimen/share_pop_common_divider_height"
             android:background="@color/share_pop_common_divider" />
 
-        <com.xy.bizport.rcs.ui.share.ShareNoScroolGridView
-            android:id="@+id/share_gv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="32dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:horizontalSpacing="8dp"
-            android:listSelector="@android:color/transparent"
-            android:numColumns="4"
-            android:scrollbars="none"
-            android:verticalSpacing="18dp" >
-        </com.xy.bizport.rcs.ui.share.ShareNoScroolGridView>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/share_recycler_view"
             android:scrollbars="horizontal"
             android:scrollbarSize="5dp"
             android:scrollbarThumbHorizontal="@drawable/share_recyclerview_scrollbar"
             android:fadeScrollbars="false"
-            android:visibility="gone"
+            android:scrollbarStyle="outsideOverlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <LinearLayout

@@ -6,8 +6,8 @@
     <dimen name="share_pop_title_font_size">18sp</dimen>
     <dimen name="share_pop_title_height">48dp</dimen>
 
-    <dimen name="grid_item_padding_left">8dp</dimen>
-    <dimen name="grid_item_padding_top">18dp</dimen>
+    <dimen name="grid_item_horizontal_space">8dp</dimen>
+    <dimen name="grid_item_vertical_space">18dp</dimen>
 
     <dimen name="grid_padding_top">8dp</dimen>
     <dimen name="grid_padding_left">20dp</dimen>
