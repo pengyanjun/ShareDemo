@@ -22,8 +22,6 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class MainActivity extends Activity implements View.OnClickListener{
 
-    public static final int SHARE_REQUEST_CODE = 1001;
-    public static final int SHARE_RESULT_CODE = 1002;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +86,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     void share(){
         try{
-            //在当前页面打开分享透明activity
             Bundle bundle = new Bundle();
             bundle.putString(ShareConstant.SHARE_TITLE, "title-特稿｜陆家嘴金融骗子和P2P“爆雷潮”，全是自作孽不可活！");
             bundle.putString(ShareConstant.SHARE_CONTENT, "content-位于上海浦东新区黄浦江畔的陆家嘴金融中心，是众多跨国银行的大中华区或东亚总部所在地，是中国最具影响力的金融中心之一。");
@@ -97,24 +94,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
             Intent intent = new Intent("com.xy.bizport.ACTION_SHARE");
             intent.putExtras(bundle);
             startActivity(intent);
-//                startActivityForResult(intent, SHARE_REQUEST_CODE);
-
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (resultCode) {
-            case SHARE_RESULT_CODE:
-                String result = data.getExtras().getString("result");
-                Toast.makeText(this,result, Toast.LENGTH_LONG).show();
-                break;
-            default:
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }
