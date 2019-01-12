@@ -242,23 +242,23 @@ public class BizportShare {
         if (!TextUtils.isEmpty(shareAppId.getWeixinAppId(context))
                 && !TextUtils.isEmpty(shareAppId.getWeixinAppSecret(context))
                 && isInstall(context, SHARE_MEDIA.WEIXIN)){
-            sharePlatformList.add(ShareMedia.WEIXIN.toSharePlatform());
-            sharePlatformList.add(ShareMedia.WEIXIN_CIRCLE.toSharePlatform());
+            sharePlatformList.add(new SharePlatform(ShareMedia.WEIXIN));
+            sharePlatformList.add(new SharePlatform(ShareMedia.WEIXIN_CIRCLE));
         }
 
 
         if (!TextUtils.isEmpty(shareAppId.getQqAppId(context))
                 && !TextUtils.isEmpty(shareAppId.getQqAppKey(context))
                 && isInstall(context, SHARE_MEDIA.QQ)){
-            sharePlatformList.add(ShareMedia.QQ.toSharePlatform());
-            sharePlatformList.add(ShareMedia.QZONE.toSharePlatform());
+            sharePlatformList.add(new SharePlatform(ShareMedia.QQ));
+            sharePlatformList.add(new SharePlatform(ShareMedia.QZONE));
         }
 
         if (!TextUtils.isEmpty(shareAppId.getSinaAppKey(context))
                 && !TextUtils.isEmpty(shareAppId.getSinaAppSecret(context))
                 && !TextUtils.isEmpty(shareAppId.getSinaCallback(context))
                 && isInstall(context, SHARE_MEDIA.SINA)){
-            sharePlatformList.add(ShareMedia.SINA.toSharePlatform());
+            sharePlatformList.add(new SharePlatform(ShareMedia.SINA));
         }
 
         return sharePlatformList;

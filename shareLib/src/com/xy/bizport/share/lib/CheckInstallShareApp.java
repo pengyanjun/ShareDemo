@@ -84,7 +84,6 @@ public class CheckInstallShareApp {
     }
 
     /**
-     * sina
      * 判断是否安装新浪微博
      */
     private static boolean isSinaInstalled(List<PackageInfo> pinfo){

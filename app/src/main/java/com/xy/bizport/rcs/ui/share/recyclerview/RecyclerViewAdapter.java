@@ -56,19 +56,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if (shareBean != null && shareBean.getPlatforms() != null && shareBean.getPlatforms().size() >0) {
                 SharePlatform platform = shareBean.getPlatforms().get(position);
 
-                if (ShareMedia.WEIXIN_CIRCLE.equals(platform.mPlatform)){
+                if (ShareMedia.WEIXIN_CIRCLE.equals(platform.shareMedia)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin_circle));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_wxcircle));
-                } else if (ShareMedia.WEIXIN.equals(platform.mPlatform)){
+                } else if (ShareMedia.WEIXIN.equals(platform.shareMedia)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_weixin));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_weixin));
-                } else if (ShareMedia.QQ.equals(platform.mPlatform)){
+                } else if (ShareMedia.QQ.equals(platform.shareMedia)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qq));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qq));
-                } else if (ShareMedia.QZONE.equals(platform.mPlatform)){
+                } else if (ShareMedia.QZONE.equals(platform.shareMedia)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_qzone));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_qzone));
-                } else if (ShareMedia.SINA.equals(platform.mPlatform)){
+                } else if (ShareMedia.SINA.equals(platform.shareMedia)){
                     viewHolder.share_name_tv.setText(ShareTool.getString(mContext, R.string.share_platform_name_sina));
                     viewHolder.share_logo_iv.setImageDrawable(ShareTool.getDrawable(mContext, R.drawable.share_sina));
                 }

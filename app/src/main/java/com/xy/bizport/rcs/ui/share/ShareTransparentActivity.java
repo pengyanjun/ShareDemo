@@ -147,7 +147,7 @@ public class ShareTransparentActivity extends ShareBaseActivity {
             }
             final SharePlatform platform = shareBean.getPlatforms().get(position);
 
-            if (platform.mPlatform == null){
+            if (platform.shareMedia == null){
                 Toast.makeText(this,"分享平台为空",Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -191,12 +191,12 @@ public class ShareTransparentActivity extends ShareBaseActivity {
     private void share(SharePlatform platform, ShareImage umImage){
         LogManager.e("pyj", "ShareTransparentActivity share");
         share_popwindow_layout.setVisibility(View.GONE);
-        if (ShareMedia.WEIXIN.equals(platform.mPlatform) || ShareMedia.WEIXIN_CIRCLE.equals(platform.mPlatform)){
+        if (ShareMedia.WEIXIN.equals(platform.shareMedia) || ShareMedia.WEIXIN_CIRCLE.equals(platform.shareMedia)){
             isNeedClose = true;
         }else {
             isNeedClose = false;
         }
-        BizportShare.getInstance().share(this, platform.mPlatform,shareBean.getShareUrl(),
+        BizportShare.getInstance().share(this, platform.shareMedia,shareBean.getShareUrl(),
                 shareBean.getSharetitle(), umImage,shareBean.getShareContent(), this);
     }
 
