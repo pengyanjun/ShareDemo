@@ -20,7 +20,6 @@ import com.xy.bizport.rcs.ui.share.recyclerview.LinearLayoutItemDecoration;
 import com.xy.bizport.share.lib.BizportShare;
 import com.xy.bizport.share.lib.CheckInstallShareApp;
 import com.xy.bizport.share.lib.IDownloadBitmapCallBack;
-import com.xy.bizport.share.lib.NetStateUtils;
 import com.xy.bizport.share.lib.ShareBaseActivity;
 import com.xy.bizport.share.lib.ShareBean;
 import com.xy.bizport.share.lib.ShareConstant;
@@ -138,7 +137,7 @@ public class ShareTransparentActivity extends ShareBaseActivity {
 
     public void shareItemClick(int position) {
         try{
-            if (!NetStateUtils.isNetworkConnected(this)){
+            if (!ShareTool.isNetworkConnected(this)){
                 Toast.makeText(this, ShareTool.getString(this, R.string.share_network_disabled),Toast.LENGTH_SHORT).show();
                 return;
             }

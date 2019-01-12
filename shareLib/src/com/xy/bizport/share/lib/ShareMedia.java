@@ -15,10 +15,6 @@ public enum ShareMedia {
         return sharePlatform;
     }
 
-    public String toString() {
-        return super.toString();
-    }
-
     public static SHARE_MEDIA getUmengMedia(ShareMedia shareMedia){
         if (shareMedia.toString().equals("QQ")){
             return SHARE_MEDIA.QQ;

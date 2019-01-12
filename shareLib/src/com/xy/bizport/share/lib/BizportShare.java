@@ -189,7 +189,7 @@ public class BizportShare {
         return shareBean;
     }
 
-    public void getImageBitmap(final Context context, final String image, final ShareBean shareBean, final int width, final int height) {
+    private void getImageBitmap(final Context context, final String image, final ShareBean shareBean, final int width, final int height) {
         Glide.with(context.getApplicationContext())
                 .load(image)
                 .asBitmap()

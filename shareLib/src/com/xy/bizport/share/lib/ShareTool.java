@@ -2,6 +2,8 @@ package com.xy.bizport.share.lib;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class ShareTool {
 
@@ -30,6 +32,13 @@ public class ShareTool {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetInfo != null && activeNetInfo.isAvailable();
     }
 
 }
