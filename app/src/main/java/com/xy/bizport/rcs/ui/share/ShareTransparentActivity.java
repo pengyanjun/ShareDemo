@@ -26,7 +26,6 @@ import com.xy.bizport.share.lib.ShareConstant;
 import com.xy.bizport.share.lib.ShareImage;
 import com.xy.bizport.share.lib.ShareMedia;
 import com.xy.bizport.share.lib.SharePlatform;
-import com.xy.bizport.share.lib.ShareTool;
 import com.xy.rcstest.R;
 
 public class ShareTransparentActivity extends ShareBaseActivity {

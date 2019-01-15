@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.xy.bizport.rcs.ui.share.ShareTool;
 import com.xy.bizport.share.lib.ShareBean;
 import com.xy.bizport.share.lib.ShareMedia;
 import com.xy.bizport.share.lib.SharePlatform;
-import com.xy.bizport.share.lib.ShareTool;
 import com.xy.rcstest.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ShareViewHolder>{
