@@ -17,6 +17,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMWeb;
 import com.xy.bizport.androidcommon.util.LogManager;
+import com.xy.bizport.share.lib.settings.ShareSettingsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 public class BizportShare {
 
     public static BizportShare mBizportShare = null ;
-    private ShareAppId shareAppId;
+    private static Context context;
 
     private BizportShare(){
 
@@ -39,6 +40,10 @@ public class BizportShare {
             }
         }
         return mBizportShare ;
+    }
+
+    public static Context getApplicationContext() {
+        return context;
     }
 
     /**
@@ -60,6 +65,7 @@ public class BizportShare {
                                String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
                                String QQ_APP_ID, String QQ_APP_KEY){
         try{
+            BizportShare.context = context;
             UMConfigure.setLogEnabled(enableLog);
             UMConfigure.setEncryptEnabled(enableEncrypt);
             initUmengShare(context, UMENG_APP_KEY, UMENG_CHANNEL, WEIXIN_APP_ID, WEIXIN_APP_SECRET, SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK, QQ_APP_ID, QQ_APP_KEY);
@@ -86,11 +92,8 @@ public class BizportShare {
                                String SINA_APP_KEY, String SINA_APP_SECRET, String SINA_CALLBACK,
                                String QQ_APP_ID, String QQ_APP_KEY){
         try{
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_UMENG_APP_KEY, UMENG_APP_KEY);
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_UMENG_CHANNEL, UMENG_CHANNEL);
-            shareAppId = new ShareAppId();
-            shareAppId.UMENG_APP_KEY = UMENG_APP_KEY;
-            shareAppId.UMENG_CHANNEL = UMENG_CHANNEL;
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_UMENG_APP_KEY, UMENG_APP_KEY);
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_UMENG_CHANNEL, UMENG_CHANNEL);
             if (!TextUtils.isEmpty(UMENG_APP_KEY) && !TextUtils.isEmpty(UMENG_CHANNEL)){
                 /**
                  * 初始化common库
@@ -104,28 +107,21 @@ public class BizportShare {
                         null);
             }
 
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_WEIXIN_APP_ID, WEIXIN_APP_ID);
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_WEIXIN_APP_SECRET, WEIXIN_APP_SECRET);
-            shareAppId.WEIXIN_APP_ID = WEIXIN_APP_ID;
-            shareAppId.WEIXIN_APP_SECRET = WEIXIN_APP_SECRET;
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_WEIXIN_APP_ID, WEIXIN_APP_ID);
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_WEIXIN_APP_SECRET, WEIXIN_APP_SECRET);
             if (!TextUtils.isEmpty(WEIXIN_APP_ID) && !TextUtils.isEmpty(WEIXIN_APP_SECRET)){
                 PlatformConfig.setWeixin(WEIXIN_APP_ID, WEIXIN_APP_SECRET);
             }
 
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_SINA_APP_KEY, SINA_APP_KEY);
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_SINA_APP_SECRET, SINA_APP_SECRET);
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_SINA_CALLBACK, SINA_CALLBACK);
-            shareAppId.SINA_APP_KEY = SINA_APP_KEY;
-            shareAppId.SINA_APP_SECRET = SINA_APP_SECRET;
-            shareAppId.SINA_CALLBACK = SINA_CALLBACK;
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_SINA_APP_KEY, SINA_APP_KEY);
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_SINA_APP_SECRET, SINA_APP_SECRET);
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_SINA_CALLBACK, SINA_CALLBACK);
             if (!TextUtils.isEmpty(SINA_APP_KEY) && !TextUtils.isEmpty(SINA_APP_SECRET) && !TextUtils.isEmpty(SINA_CALLBACK)){
                 PlatformConfig.setSinaWeibo(SINA_APP_KEY, SINA_APP_SECRET, SINA_CALLBACK);
             }
 
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_QQ_APP_ID, QQ_APP_ID);
-            SPUtils.saveSharedPreferencesValue(context, ShareConstant.CONSTANT_QQ_APP_KEY, QQ_APP_KEY);
-            shareAppId.QQ_APP_ID = QQ_APP_ID;
-            shareAppId.QQ_APP_KEY = QQ_APP_KEY;
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_QQ_APP_ID, QQ_APP_ID);
+            ShareSettingsRepository.getInstance().save(ShareConstant.CONSTANT_QQ_APP_KEY, QQ_APP_KEY);
             if (!TextUtils.isEmpty(QQ_APP_ID) && !TextUtils.isEmpty(QQ_APP_KEY)){
                 PlatformConfig.setQQZone(QQ_APP_ID, QQ_APP_KEY);
             }
@@ -239,24 +235,24 @@ public class BizportShare {
     private List<SharePlatform> getSharePlatformList(Context context) {
         List<SharePlatform> sharePlatformList = new ArrayList<>();
 
-        if (!TextUtils.isEmpty(shareAppId.getWeixinAppId(context))
-                && !TextUtils.isEmpty(shareAppId.getWeixinAppSecret(context))
+        if (!TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_WEIXIN_APP_ID, ""))
+                && !TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_WEIXIN_APP_SECRET, ""))
                 && isInstall(context, SHARE_MEDIA.WEIXIN)){
             sharePlatformList.add(new SharePlatform(ShareMedia.WEIXIN));
             sharePlatformList.add(new SharePlatform(ShareMedia.WEIXIN_CIRCLE));
         }
 
 
-        if (!TextUtils.isEmpty(shareAppId.getQqAppId(context))
-                && !TextUtils.isEmpty(shareAppId.getQqAppKey(context))
+        if (!TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_QQ_APP_ID, ""))
+                && !TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_QQ_APP_KEY, ""))
                 && isInstall(context, SHARE_MEDIA.QQ)){
             sharePlatformList.add(new SharePlatform(ShareMedia.QQ));
             sharePlatformList.add(new SharePlatform(ShareMedia.QZONE));
         }
 
-        if (!TextUtils.isEmpty(shareAppId.getSinaAppKey(context))
-                && !TextUtils.isEmpty(shareAppId.getSinaAppSecret(context))
-                && !TextUtils.isEmpty(shareAppId.getSinaCallback(context))
+        if (!TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_SINA_APP_KEY, ""))
+                && !TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_SINA_APP_SECRET, ""))
+                && !TextUtils.isEmpty(ShareSettingsRepository.getInstance().getString(ShareConstant.CONSTANT_SINA_CALLBACK, ""))
                 && isInstall(context, SHARE_MEDIA.SINA)){
             sharePlatformList.add(new SharePlatform(ShareMedia.SINA));
         }
